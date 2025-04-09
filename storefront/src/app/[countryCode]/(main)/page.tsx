@@ -6,9 +6,9 @@ import { getCollectionsWithProducts } from "@lib/data/collections"
 import { getRegion } from "@lib/data/regions"
 
 export const metadata: Metadata = {
-  title: "Medusa Next.js Starter Template",
+  title: "HypeMarkt",
   description:
-    "A performant frontend ecommerce starter template with Next.js 14 and Medusa.",
+    "Entdecke bei HypeMarkt eine vielfältige Auswahl an angesagten und einzigartigen Produkten aus aller Welt. Bei uns findest du alles, was im Trend liegt. Wir bringen dir Hype direkt nach Hause. Schnell. Einfach. Unvergesslich.",
 }
 
 export default async function Home({
