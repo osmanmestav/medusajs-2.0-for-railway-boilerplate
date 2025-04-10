@@ -33,7 +33,7 @@ const ProfileName: React.FC<MyInformationProps> = ({ customer }) => {
   return (
     <form action={formAction} onReset={() => clearState()} className="w-full">
       <AccountInfo
-        label="Password"
+        label="Passwort"
         currentInfo={
           <span>The password is not shown for security reasons</span>
         }
