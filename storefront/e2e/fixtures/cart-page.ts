@@ -1,9 +1,9 @@
 import { Locator, Page } from "@playwright/test"
 import { BasePage } from "./base/base-page"
 
-export class WarenkorbPage extends BasePage {
+export class CartPage extends BasePage {
   container: Locator
-  emptyWarenkorbMessage: Locator
+  emptyCartMessage: Locator
   signInButton: Locator
   productRow: Locator
   productTitle: Locator
@@ -20,17 +20,17 @@ export class WarenkorbPage extends BasePage {
   giftCardAmount: Locator
   giftCardRemoveButton: Locator
   cartSubtotal: Locator
-  cartRabatt: Locator
+  cartDiscount: Locator
   cartGiftCardAmount: Locator
-  cartVersand: Locator
+  cartShipping: Locator
   cartTaxes: Locator
-  cartGesamt: Locator
+  cartTotal: Locator
   checkoutButton: Locator
 
   constructor(page: Page) {
     super(page)
     this.container = page.getByTestId("cart-container")
-    this.emptyWarenkorbMessage = this.container.getByTestId("empty-cart-message")
+    this.emptyCartMessage = this.container.getByTestId("empty-cart-message")
     this.signInButton = this.container.getByTestId("sign-in-button")
     this.productRow = this.container.getByTestId("product-row")
     this.productTitle = this.container.getByTestId("product-title")
@@ -58,13 +58,13 @@ export class WarenkorbPage extends BasePage {
       "remove-gift-card-button"
     )
     this.cartSubtotal = this.container.getByTestId("cart-subtotal")
-    this.cartRabatt = this.container.getByTestId("cart-discount")
+    this.cartDiscount = this.container.getByTestId("cart-discount")
     this.cartGiftCardAmount = this.container.getByTestId(
       "cart-gift-card-amount"
     )
-    this.cartVersand = this.container.getByTestId("cart-shipping")
+    this.cartShipping = this.container.getByTestId("cart-shipping")
     this.cartTaxes = this.container.getByTestId("cart-taxes")
-    this.cartGesamt = this.container.getByTestId("cart-total")
+    this.cartTotal = this.container.getByTestId("cart-total")
   }
 
   async getProduct(title: string, variant: string) {
@@ -100,7 +100,7 @@ export class WarenkorbPage extends BasePage {
     }
   }
 
-  async getRabatt(code: string) {
+  async getDiscount(code: string) {
     const discount = this.discountRow
     const amount = discount.getByTestId("discount-amount")
     return {

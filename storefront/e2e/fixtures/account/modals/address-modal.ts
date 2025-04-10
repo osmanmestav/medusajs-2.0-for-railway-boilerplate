@@ -1,7 +1,7 @@
 import { Page, Locator } from "@playwright/test"
 import { BaseModal } from "../../base/base-modal"
 
-export class AdresseModal extends BaseModal {
+export class AddressModal extends BaseModal {
   saveButton: Locator
   cancelButton: Locator
 

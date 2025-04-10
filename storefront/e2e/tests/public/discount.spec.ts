@@ -1,7 +1,7 @@
-import { seedRabatt, seedUser } from "../../data/seed"
+import { seedDiscount, seedUser } from "../../data/seed"
 import { test, expect } from "../../index"
 
-test.describe("Rabatt tests", async () => {
+test.describe("Discount tests", async () => {
   let discount = {
     id: "",
     code: "",
@@ -9,7 +9,7 @@ test.describe("Rabatt tests", async () => {
     amount: 0,
   }
   test.beforeEach(async () => {
-    discount = await seedRabatt()
+    discount = await seedDiscount()
   })
 
   test("Make sure discount works during transaction", async ({
@@ -31,12 +31,12 @@ test.describe("Rabatt tests", async () => {
       await test.step("Add the product to the cart and goto checkout", async () => {
         await productPage.selectOption("M")
         await productPage.clickAddProduct()
-        await productPage.cartDropdown.navWarenkorbLink.click()
-        await productPage.cartDropdown.goToWarenkorbButton.click()
+        await productPage.cartDropdown.navCartLink.click()
+        await productPage.cartDropdown.goToCartButton.click()
         await cartPage.container.waitFor({ state: "visible" })
         await cartPage.cartDropdown.close()
         cartSubtotal = Number(
-          (await cartPage.cartGesamt.getAttribute("data-value")) || ""
+          (await cartPage.cartTotal.getAttribute("data-value")) || ""
         )
       })
       await test.step("Navigate to the checkout page", async () => {
@@ -50,23 +50,23 @@ test.describe("Rabatt tests", async () => {
       await expect(checkoutPage.discountInput).toBeVisible()
       await checkoutPage.discountInput.fill(discount.code)
       await checkoutPage.discountApplyButton.click()
-      const paymentRabatt = await checkoutPage.getRabatt(discount.code)
-      await expect(paymentRabatt.locator).toBeVisible()
-      await expect(paymentRabatt.code).toHaveText(discount.code)
-      expect(paymentRabatt.amountValue).toBe(discount.amount.toString())
-      expect(await checkoutPage.cartGesamt.getAttribute("data-value")).toBe(
+      const paymentDiscount = await checkoutPage.getDiscount(discount.code)
+      await expect(paymentDiscount.locator).toBeVisible()
+      await expect(paymentDiscount.code).toHaveText(discount.code)
+      expect(paymentDiscount.amountValue).toBe(discount.amount.toString())
+      expect(await checkoutPage.cartTotal.getAttribute("data-value")).toBe(
         (cartSubtotal - discount.amount).toString()
       )
     })
 
-    let shippingGesamt = 0
+    let shippingTotal = 0
     await test.step("Go through checkout process", async () => {
       await test.step("Enter in the first step of the checkout process", async () => {
         await test.step("Enter in the shipping address info", async () => {
           await checkoutPage.shippingFirstNameInput.fill("First")
           await checkoutPage.shippingLastNameInput.fill("Last")
           await checkoutPage.shippingCompanyInput.fill("MyCorp")
-          await checkoutPage.shippingAdresseInput.fill("123 Fake street")
+          await checkoutPage.shippingAddressInput.fill("123 Fake street")
           await checkoutPage.shippingPostalCodeInput.fill("80010")
           await checkoutPage.shippingCityInput.fill("Denver")
           await checkoutPage.shippingProvinceInput.fill("Colorado")
@@ -76,22 +76,22 @@ test.describe("Rabatt tests", async () => {
         await test.step("Enter in the contact info and open the billing info form", async () => {
           await checkoutPage.shippingEmailInput.fill("test@example.com")
           await checkoutPage.shippingPhoneInput.fill("3031112222")
-          await checkoutPage.submitAdresseButton.click()
+          await checkoutPage.submitAddressButton.click()
         })
       })
 
       await test.step("Complete the rest of the payment process", async () => {
         await checkoutPage.selectDeliveryOption("FakeEx Standard")
         await checkoutPage.submitDeliveryOptionButton.click()
-        shippingGesamt = Number(
-          (await checkoutPage.cartVersand.getAttribute("data-value")) || "0"
+        shippingTotal = Number(
+          (await checkoutPage.cartShipping.getAttribute("data-value")) || "0"
         )
         await checkoutPage.submitPaymentButton.click()
       })
 
       await test.step("Make sure the cart total is the expected value after selecting shipping", async () => {
-        expect(await checkoutPage.cartGesamt.getAttribute("data-value")).toBe(
-          (cartSubtotal - discount.amount + shippingGesamt).toString()
+        expect(await checkoutPage.cartTotal.getAttribute("data-value")).toBe(
+          (cartSubtotal - discount.amount + shippingTotal).toString()
         )
       })
 
@@ -100,16 +100,16 @@ test.describe("Rabatt tests", async () => {
         await orderPage.container.waitFor({ state: "visible" })
       })
     })
-    const cartGesamt = Number(cartSubtotal) + Number(shippingGesamt)
+    const cartTotal = Number(cartSubtotal) + Number(shippingTotal)
 
     await test.step("Assert the order page shows the total was 0", async () => {
-      expect(await orderPage.cartGesamt.getAttribute("data-value")).toBe(
-        (cartGesamt - discount.amount).toString()
+      expect(await orderPage.cartTotal.getAttribute("data-value")).toBe(
+        (cartTotal - discount.amount).toString()
       )
       expect(await orderPage.cartSubtotal.getAttribute("data-value")).toBe(
         cartSubtotal.toString()
       )
-      expect(await orderPage.cartRabatt.getAttribute("data-value")).toBe(
+      expect(await orderPage.cartDiscount.getAttribute("data-value")).toBe(
         discount.amount.toString()
       )
     })
@@ -134,12 +134,12 @@ test.describe("Rabatt tests", async () => {
       await test.step("Add the product to the cart and goto checkout", async () => {
         await productPage.selectOption("M")
         await productPage.clickAddProduct()
-        await productPage.cartDropdown.navWarenkorbLink.click()
-        await productPage.cartDropdown.goToWarenkorbButton.click()
+        await productPage.cartDropdown.navCartLink.click()
+        await productPage.cartDropdown.goToCartButton.click()
         await cartPage.container.waitFor({ state: "visible" })
         await cartPage.cartDropdown.close()
         cartSubtotal = Number(
-          (await cartPage.cartGesamt.getAttribute("data-value")) || ""
+          (await cartPage.cartTotal.getAttribute("data-value")) || ""
         )
       })
     })
@@ -149,11 +149,11 @@ test.describe("Rabatt tests", async () => {
       await expect(cartPage.discountInput).toBeVisible()
       await cartPage.discountInput.fill(discount.code)
       await cartPage.discountApplyButton.click()
-      const paymentRabatt = await cartPage.getRabatt(discount.code)
-      await expect(paymentRabatt.locator).toBeVisible()
-      await expect(paymentRabatt.code).toHaveText(discount.code)
-      expect(paymentRabatt.amountValue).toBe(discount.amount.toString())
-      expect(await cartPage.cartGesamt.getAttribute("data-value")).toBe(
+      const paymentDiscount = await cartPage.getDiscount(discount.code)
+      await expect(paymentDiscount.locator).toBeVisible()
+      await expect(paymentDiscount.code).toHaveText(discount.code)
+      expect(paymentDiscount.amountValue).toBe(discount.amount.toString())
+      expect(await cartPage.cartTotal.getAttribute("data-value")).toBe(
         (cartSubtotal - discount.amount).toString()
       )
     })
@@ -161,19 +161,19 @@ test.describe("Rabatt tests", async () => {
     await test.step("Go to checkout and assert the value is still discounted", async () => {
       await cartPage.checkoutButton.click()
       await checkoutPage.container.waitFor({ state: "visible" })
-      expect(await checkoutPage.cartGesamt.getAttribute("data-value")).toBe(
+      expect(await checkoutPage.cartTotal.getAttribute("data-value")).toBe(
         (cartSubtotal - discount.amount).toString()
       )
     })
 
-    let shippingGesamt = 0
+    let shippingTotal = 0
     await test.step("Go through checkout process", async () => {
       await test.step("Enter in the first step of the checkout process", async () => {
         await test.step("Enter in the shipping address info", async () => {
           await checkoutPage.shippingFirstNameInput.fill("First")
           await checkoutPage.shippingLastNameInput.fill("Last")
           await checkoutPage.shippingCompanyInput.fill("MyCorp")
-          await checkoutPage.shippingAdresseInput.fill("123 Fake street")
+          await checkoutPage.shippingAddressInput.fill("123 Fake street")
           await checkoutPage.shippingPostalCodeInput.fill("80010")
           await checkoutPage.shippingCityInput.fill("Denver")
           await checkoutPage.shippingProvinceInput.fill("Colorado")
@@ -183,31 +183,31 @@ test.describe("Rabatt tests", async () => {
         await test.step("Enter in the contact info and open the billing info form", async () => {
           await checkoutPage.shippingEmailInput.fill("test@example.com")
           await checkoutPage.shippingPhoneInput.fill("3031112222")
-          await checkoutPage.submitAdresseButton.click()
+          await checkoutPage.submitAddressButton.click()
         })
       })
 
       await test.step("Complete the rest of the payment process", async () => {
         await checkoutPage.selectDeliveryOption("FakeEx Standard")
         await checkoutPage.submitDeliveryOptionButton.click()
-        shippingGesamt = Number(
-          (await checkoutPage.cartVersand.getAttribute("data-value")) || "0"
+        shippingTotal = Number(
+          (await checkoutPage.cartShipping.getAttribute("data-value")) || "0"
         )
         await checkoutPage.submitPaymentButton.click()
         await checkoutPage.submitOrderButton.click()
         await orderPage.container.waitFor({ state: "visible" })
       })
     })
-    const cartGesamt = Number(cartSubtotal) + Number(shippingGesamt)
+    const cartTotal = Number(cartSubtotal) + Number(shippingTotal)
 
     await test.step("Assert the order page shows the total was 0", async () => {
-      expect(await orderPage.cartGesamt.getAttribute("data-value")).toBe(
-        (cartGesamt - discount.amount).toString()
+      expect(await orderPage.cartTotal.getAttribute("data-value")).toBe(
+        (cartTotal - discount.amount).toString()
       )
       expect(await orderPage.cartSubtotal.getAttribute("data-value")).toBe(
         cartSubtotal.toString()
       )
-      expect(await orderPage.cartRabatt.getAttribute("data-value")).toBe(
+      expect(await orderPage.cartDiscount.getAttribute("data-value")).toBe(
         discount.amount.toString()
       )
     })
@@ -232,12 +232,12 @@ test.describe("Rabatt tests", async () => {
       await test.step("Add the product to the cart and goto checkout", async () => {
         await productPage.selectOption("M")
         await productPage.clickAddProduct()
-        await productPage.cartDropdown.navWarenkorbLink.click()
-        await productPage.cartDropdown.goToWarenkorbButton.click()
+        await productPage.cartDropdown.navCartLink.click()
+        await productPage.cartDropdown.goToCartButton.click()
         await cartPage.container.waitFor({ state: "visible" })
         await cartPage.cartDropdown.close()
         cartSubtotal = Number(
-          (await cartPage.cartGesamt.getAttribute("data-value")) || ""
+          (await cartPage.cartTotal.getAttribute("data-value")) || ""
         )
       })
     })
@@ -247,11 +247,11 @@ test.describe("Rabatt tests", async () => {
       await expect(cartPage.discountInput).toBeVisible()
       await cartPage.discountInput.fill(discount.code)
       await cartPage.discountApplyButton.click()
-      const paymentRabatt = await cartPage.getRabatt(discount.code)
-      await expect(paymentRabatt.locator).toBeVisible()
-      await expect(paymentRabatt.code).toHaveText(discount.code)
-      expect(paymentRabatt.amountValue).toBe(discount.amount.toString())
-      expect(await cartPage.cartGesamt.getAttribute("data-value")).toBe(
+      const paymentDiscount = await cartPage.getDiscount(discount.code)
+      await expect(paymentDiscount.locator).toBeVisible()
+      await expect(paymentDiscount.code).toHaveText(discount.code)
+      expect(paymentDiscount.amountValue).toBe(discount.amount.toString())
+      expect(await cartPage.cartTotal.getAttribute("data-value")).toBe(
         (cartSubtotal - discount.amount).toString()
       )
     })
@@ -259,25 +259,25 @@ test.describe("Rabatt tests", async () => {
     await test.step("Go to checkout and assert the value is still discounted", async () => {
       await cartPage.checkoutButton.click()
       await checkoutPage.container.waitFor({ state: "visible" })
-      expect(await checkoutPage.cartGesamt.getAttribute("data-value")).toBe(
+      expect(await checkoutPage.cartTotal.getAttribute("data-value")).toBe(
         (cartSubtotal - discount.amount).toString()
       )
-      const paymentRabatt = await checkoutPage.getRabatt(discount.code)
-      await paymentRabatt.removeButton.click()
-      await expect(paymentRabatt.locator).not.toBeVisible()
-      expect(await checkoutPage.cartGesamt.getAttribute("data-value")).not.toBe(
+      const paymentDiscount = await checkoutPage.getDiscount(discount.code)
+      await paymentDiscount.removeButton.click()
+      await expect(paymentDiscount.locator).not.toBeVisible()
+      expect(await checkoutPage.cartTotal.getAttribute("data-value")).not.toBe(
         (cartSubtotal - discount.amount).toString()
       )
     })
 
-    let shippingGesamt = ""
+    let shippingTotal = ""
     await test.step("Go through checkout process", async () => {
       await test.step("Enter in the first step of the checkout process", async () => {
         await test.step("Enter in the shipping address info", async () => {
           await checkoutPage.shippingFirstNameInput.fill("First")
           await checkoutPage.shippingLastNameInput.fill("Last")
           await checkoutPage.shippingCompanyInput.fill("MyCorp")
-          await checkoutPage.shippingAdresseInput.fill("123 Fake street")
+          await checkoutPage.shippingAddressInput.fill("123 Fake street")
           await checkoutPage.shippingPostalCodeInput.fill("80010")
           await checkoutPage.shippingCityInput.fill("Denver")
           await checkoutPage.shippingProvinceInput.fill("Colorado")
@@ -287,25 +287,25 @@ test.describe("Rabatt tests", async () => {
         await test.step("Enter in the contact info and open the billing info form", async () => {
           await checkoutPage.shippingEmailInput.fill("test@example.com")
           await checkoutPage.shippingPhoneInput.fill("3031112222")
-          await checkoutPage.submitAdresseButton.click()
+          await checkoutPage.submitAddressButton.click()
         })
       })
 
       await test.step("Complete the rest of the payment process", async () => {
         await checkoutPage.selectDeliveryOption("FakeEx Standard")
         await checkoutPage.submitDeliveryOptionButton.click()
-        shippingGesamt =
-          (await checkoutPage.cartVersand.getAttribute("data-value")) || ""
+        shippingTotal =
+          (await checkoutPage.cartShipping.getAttribute("data-value")) || ""
         await checkoutPage.submitPaymentButton.click()
         await checkoutPage.submitOrderButton.click()
         await orderPage.container.waitFor({ state: "visible" })
       })
     })
-    const cartGesamt = (Number(cartSubtotal) + Number(shippingGesamt)).toString()
+    const cartTotal = (Number(cartSubtotal) + Number(shippingTotal)).toString()
 
     await test.step("Assert the order page shows the total was not discounted", async () => {
-      expect(await orderPage.cartGesamt.getAttribute("data-value")).toBe(
-        cartGesamt
+      expect(await orderPage.cartTotal.getAttribute("data-value")).toBe(
+        cartTotal
       )
       expect(await orderPage.cartSubtotal.getAttribute("data-value")).toBe(
         cartSubtotal.toString()
@@ -329,8 +329,8 @@ test.describe("Rabatt tests", async () => {
       await test.step("Add the product to the cart and goto checkout", async () => {
         await productPage.selectOption("M")
         await productPage.clickAddProduct()
-        await productPage.cartDropdown.navWarenkorbLink.click()
-        await productPage.cartDropdown.goToWarenkorbButton.click()
+        await productPage.cartDropdown.navCartLink.click()
+        await productPage.cartDropdown.goToCartButton.click()
         await cartPage.container.waitFor({ state: "visible" })
         await cartPage.cartDropdown.close()
       })
@@ -362,8 +362,8 @@ test.describe("Rabatt tests", async () => {
       await test.step("Add the product to the cart and goto checkout", async () => {
         await productPage.selectOption("M")
         await productPage.clickAddProduct()
-        await productPage.cartDropdown.navWarenkorbLink.click()
-        await productPage.cartDropdown.goToWarenkorbButton.click()
+        await productPage.cartDropdown.navCartLink.click()
+        await productPage.cartDropdown.goToCartButton.click()
         await cartPage.container.waitFor({ state: "visible" })
         await cartPage.cartDropdown.close()
         await cartPage.checkoutButton.click()
@@ -397,12 +397,12 @@ test.describe("Rabatt tests", async () => {
       await test.step("Add the product to the cart and goto checkout", async () => {
         await productPage.selectOption("M")
         await productPage.clickAddProduct()
-        await productPage.cartDropdown.navWarenkorbLink.click()
-        await productPage.cartDropdown.goToWarenkorbButton.click()
+        await productPage.cartDropdown.navCartLink.click()
+        await productPage.cartDropdown.goToCartButton.click()
         await cartPage.container.waitFor({ state: "visible" })
         await cartPage.cartDropdown.close()
         cartSubtotal = Number(
-          (await cartPage.cartGesamt.getAttribute("data-value")) || ""
+          (await cartPage.cartTotal.getAttribute("data-value")) || ""
         )
       })
     })
@@ -411,9 +411,9 @@ test.describe("Rabatt tests", async () => {
       await cartPage.discountButton.click()
       await cartPage.discountInput.fill(discount.code)
       await cartPage.discountApplyButton.click()
-      const paymentRabatt = await cartPage.getRabatt(discount.code)
-      expect(paymentRabatt.amountValue).toBe(discount.amount.toString())
-      expect(await cartPage.cartGesamt.getAttribute("data-value")).toBe(
+      const paymentDiscount = await cartPage.getDiscount(discount.code)
+      expect(paymentDiscount.amountValue).toBe(discount.amount.toString())
+      expect(await cartPage.cartTotal.getAttribute("data-value")).toBe(
         (cartSubtotal - discount.amount).toString()
       )
     })
@@ -428,10 +428,10 @@ test.describe("Rabatt tests", async () => {
     })
 
     await test.step("Verify the giftcard is still on the cart page", async () => {
-      const paymentRabatt = await cartPage.getRabatt(discount.code)
-      await expect(paymentRabatt.locator).toBeVisible()
-      await expect(paymentRabatt.code).toContainText(discount.code)
-      expect(await cartPage.cartGesamt.getAttribute("data-value")).toBe(
+      const paymentDiscount = await cartPage.getDiscount(discount.code)
+      await expect(paymentDiscount.locator).toBeVisible()
+      await expect(paymentDiscount.code).toContainText(discount.code)
+      expect(await cartPage.cartTotal.getAttribute("data-value")).toBe(
         (cartSubtotal - discount.amount).toString()
       )
     })
@@ -439,13 +439,13 @@ test.describe("Rabatt tests", async () => {
     await test.step("Verify the giftcard is still on the checkout page", async () => {
       await cartPage.checkoutButton.click()
       await checkoutPage.container.waitFor({ state: "visible" })
-      const paymentRabatt = await checkoutPage.getRabatt(discount.code)
-      await expect(paymentRabatt.locator).toBeVisible()
-      await expect(paymentRabatt.code).toContainText(discount.code)
-      expect(await checkoutPage.cartGesamt.getAttribute("data-value")).toBe(
+      const paymentDiscount = await checkoutPage.getDiscount(discount.code)
+      await expect(paymentDiscount.locator).toBeVisible()
+      await expect(paymentDiscount.code).toContainText(discount.code)
+      expect(await checkoutPage.cartTotal.getAttribute("data-value")).toBe(
         (cartSubtotal - discount.amount).toString()
       )
-      expect(paymentRabatt.amountValue).toBe(discount.amount.toString())
+      expect(paymentDiscount.amountValue).toBe(discount.amount.toString())
     })
   })
 
@@ -467,12 +467,12 @@ test.describe("Rabatt tests", async () => {
       await test.step("Add the product to the cart and goto checkout", async () => {
         await productPage.selectOption("M")
         await productPage.clickAddProduct()
-        await productPage.cartDropdown.navWarenkorbLink.click()
-        await productPage.cartDropdown.goToWarenkorbButton.click()
+        await productPage.cartDropdown.navCartLink.click()
+        await productPage.cartDropdown.goToCartButton.click()
         await cartPage.container.waitFor({ state: "visible" })
         await cartPage.cartDropdown.close()
         cartSubtotal = Number(
-          (await cartPage.cartGesamt.getAttribute("data-value")) || ""
+          (await cartPage.cartTotal.getAttribute("data-value")) || ""
         )
       })
     })
@@ -481,9 +481,9 @@ test.describe("Rabatt tests", async () => {
       await cartPage.discountButton.click()
       await cartPage.discountInput.fill(discount.code)
       await cartPage.discountApplyButton.click()
-      const paymentRabatt = await cartPage.getRabatt(discount.code)
-      expect(paymentRabatt.amountValue).toBe(discount.amount.toString())
-      expect(await cartPage.cartGesamt.getAttribute("data-value")).toBe(
+      const paymentDiscount = await cartPage.getDiscount(discount.code)
+      expect(paymentDiscount.amountValue).toBe(discount.amount.toString())
+      expect(await cartPage.cartTotal.getAttribute("data-value")).toBe(
         (cartSubtotal - discount.amount).toString()
       )
     })
@@ -503,10 +503,10 @@ test.describe("Rabatt tests", async () => {
     })
 
     await test.step("Verify the giftcard is still on the cart page", async () => {
-      const paymentRabatt = await cartPage.getRabatt(discount.code)
-      await expect(paymentRabatt.locator).toBeVisible()
-      await expect(paymentRabatt.code).toContainText(discount.code)
-      expect(await cartPage.cartGesamt.getAttribute("data-value")).toBe(
+      const paymentDiscount = await cartPage.getDiscount(discount.code)
+      await expect(paymentDiscount.locator).toBeVisible()
+      await expect(paymentDiscount.code).toContainText(discount.code)
+      expect(await cartPage.cartTotal.getAttribute("data-value")).toBe(
         (cartSubtotal - discount.amount).toString()
       )
     })
@@ -514,13 +514,13 @@ test.describe("Rabatt tests", async () => {
     await test.step("Verify the giftcard is still on the checkout page", async () => {
       await cartPage.checkoutButton.click()
       await checkoutPage.container.waitFor({ state: "visible" })
-      const paymentRabatt = await checkoutPage.getRabatt(discount.code)
-      await expect(paymentRabatt.locator).toBeVisible()
-      await expect(paymentRabatt.code).toContainText(discount.code)
-      expect(await checkoutPage.cartGesamt.getAttribute("data-value")).toBe(
+      const paymentDiscount = await checkoutPage.getDiscount(discount.code)
+      await expect(paymentDiscount.locator).toBeVisible()
+      await expect(paymentDiscount.code).toContainText(discount.code)
+      expect(await checkoutPage.cartTotal.getAttribute("data-value")).toBe(
         (cartSubtotal - discount.amount).toString()
       )
-      expect(paymentRabatt.amountValue).toBe(discount.amount.toString())
+      expect(paymentDiscount.amountValue).toBe(discount.amount.toString())
     })
   })
 })

@@ -1,31 +1,31 @@
 import { test as base } from "@playwright/test"
-import { AdresseesPage } from "./addresses-page"
+import { AddressesPage } from "./addresses-page"
 import { LoginPage } from "./login-page"
 import { OrderPage } from "./order-page"
-import { BestellungenPage } from "./orders-page"
+import { OrdersPage } from "./orders-page"
 import { OverviewPage } from "./overview-page"
 import { ProfilePage } from "./profile-page"
 import { RegisterPage } from "./register-page"
 
 export const accountFixtures = base.extend<{
-  accountAdresseesPage: AdresseesPage
+  accountAddressesPage: AddressesPage
   accountOrderPage: OrderPage
-  accountBestellungenPage: BestellungenPage
+  accountOrdersPage: OrdersPage
   accountOverviewPage: OverviewPage
   accountProfilePage: ProfilePage
   loginPage: LoginPage
   registerPage: RegisterPage
 }>({
-  accountAdresseesPage: async ({ page }, use) => {
-    const addressesPage = new AdresseesPage(page)
+  accountAddressesPage: async ({ page }, use) => {
+    const addressesPage = new AddressesPage(page)
     await use(addressesPage)
   },
   accountOrderPage: async ({ page }, use) => {
     const orderPage = new OrderPage(page)
     await use(orderPage)
   },
-  accountBestellungenPage: async ({ page }, use) => {
-    const ordersPage = new BestellungenPage(page)
+  accountOrdersPage: async ({ page }, use) => {
+    const ordersPage = new OrdersPage(page)
     await use(ordersPage)
   },
   accountOverviewPage: async ({ page }, use) => {

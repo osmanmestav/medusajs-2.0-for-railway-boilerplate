@@ -31,21 +31,21 @@ test.describe("Account profile tests", () => {
     })
 
     await test.step("enter in the billing address", async () => {
-      await expect(profilePage.savedBillingAdresse).toContainText(
+      await expect(profilePage.savedBillingAddress).toContainText(
         "No billing address"
       )
-      await profilePage.billingAdresseEditButton.click()
+      await profilePage.billingAddressEditButton.click()
       await profilePage.billingFirstNameInput.fill("First")
       await profilePage.billingLastNameInput.fill("Last")
-      await profilePage.billingAdresse1Input.fill("123 Fake Street")
+      await profilePage.billingAddress1Input.fill("123 Fake Street")
       await profilePage.billingPostcalCodeInput.fill("11111")
       await profilePage.billingCityInput.fill("Springdale")
       await profilePage.billingProvinceInput.fill("IL")
       await profilePage.billingCountryCodeSelect.selectOption({
         label: "United States",
       })
-      await profilePage.billingAdresseSaveButton.click()
-      await expect(profilePage.billingAdresseSuccessMessage).toBeVisible()
+      await profilePage.billingAddressSaveButton.click()
+      await expect(profilePage.billingAddressSuccessMessage).toBeVisible()
     })
 
     await test.step("profile completion state", async () => {
@@ -53,14 +53,14 @@ test.describe("Account profile tests", () => {
       await expect(overviewPage.profileCompletion).toHaveText("100%")
 
       await profilePage.goto()
-      await expect(profilePage.savedBillingAdresse).toContainText("First Last")
-      await expect(profilePage.savedBillingAdresse).toContainText(
+      await expect(profilePage.savedBillingAddress).toContainText("First Last")
+      await expect(profilePage.savedBillingAddress).toContainText(
         "123 Fake Street"
       )
-      await expect(profilePage.savedBillingAdresse).toContainText(
+      await expect(profilePage.savedBillingAddress).toContainText(
         "11111, Springdale"
       )
-      await expect(profilePage.savedBillingAdresse).toContainText(
+      await expect(profilePage.savedBillingAddress).toContainText(
         "United States"
       )
     })
@@ -98,21 +98,21 @@ test.describe("Account profile tests", () => {
     })
 
     await test.step("enter in the billing address", async () => {
-      await expect(profilePage.savedBillingAdresse).toContainText(
+      await expect(profilePage.savedBillingAddress).toContainText(
         "No billing address"
       )
-      await profilePage.billingAdresseEditButton.click()
+      await profilePage.billingAddressEditButton.click()
       await profilePage.billingFirstNameInput.fill("First")
       await profilePage.billingLastNameInput.fill("Last")
-      await profilePage.billingAdresse1Input.fill("123 Fake Street")
+      await profilePage.billingAddress1Input.fill("123 Fake Street")
       await profilePage.billingPostcalCodeInput.fill("11111")
       await profilePage.billingCityInput.fill("Springdale")
       await profilePage.billingProvinceInput.fill("IL")
       await profilePage.billingCountryCodeSelect.selectOption({
         label: "United States",
       })
-      await profilePage.billingAdresseSaveButton.click()
-      await expect(profilePage.billingAdresseSuccessMessage).toBeVisible()
+      await profilePage.billingAddressSaveButton.click()
+      await expect(profilePage.billingAddressSuccessMessage).toBeVisible()
     })
 
     await test.step("Refresh page and verify information saved is still there", async () => {
@@ -121,14 +121,14 @@ test.describe("Account profile tests", () => {
       await expect(profilePage.savedName).toContainText("LastNew")
       await expect(profilePage.savedPhone).toContainText("8888888888")
 
-      await expect(profilePage.savedBillingAdresse).toContainText("First Last")
-      await expect(profilePage.savedBillingAdresse).toContainText(
+      await expect(profilePage.savedBillingAddress).toContainText("First Last")
+      await expect(profilePage.savedBillingAddress).toContainText(
         "123 Fake Street"
       )
-      await expect(profilePage.savedBillingAdresse).toContainText(
+      await expect(profilePage.savedBillingAddress).toContainText(
         "11111, Springdale"
       )
-      await expect(profilePage.savedBillingAdresse).toContainText(
+      await expect(profilePage.savedBillingAddress).toContainText(
         "United States"
       )
     })
@@ -149,14 +149,14 @@ test.describe("Account profile tests", () => {
       await expect(profilePage.savedName).toContainText("LastNew")
       await expect(profilePage.savedPhone).toContainText("8888888888")
 
-      await expect(profilePage.savedBillingAdresse).toContainText("First Last")
-      await expect(profilePage.savedBillingAdresse).toContainText(
+      await expect(profilePage.savedBillingAddress).toContainText("First Last")
+      await expect(profilePage.savedBillingAddress).toContainText(
         "123 Fake Street"
       )
-      await expect(profilePage.savedBillingAdresse).toContainText(
+      await expect(profilePage.savedBillingAddress).toContainText(
         "11111, Springdale"
       )
-      await expect(profilePage.savedBillingAdresse).toContainText(
+      await expect(profilePage.savedBillingAddress).toContainText(
         "United States"
       )
     })

@@ -1,22 +1,22 @@
 import { Locator, Page } from "@playwright/test"
 
-export class WarenkorbDropdown {
+export class CartDropdown {
   page: Page
-  navWarenkorbLink: Locator
+  navCartLink: Locator
   cartDropdown: Locator
   cartSubtotal: Locator
-  goToWarenkorbButton: Locator
+  goToCartButton: Locator
 
   constructor(page: Page) {
     this.page = page
-    this.navWarenkorbLink = page.getByTestId("nav-cart-link")
+    this.navCartLink = page.getByTestId("nav-cart-link")
     this.cartDropdown = page.getByTestId("nav-cart-dropdown")
     this.cartSubtotal = this.cartDropdown.getByTestId("cart-subtotal")
-    this.goToWarenkorbButton = this.cartDropdown.getByTestId("go-to-cart-button")
+    this.goToCartButton = this.cartDropdown.getByTestId("go-to-cart-button")
   }
 
-  async displayWarenkorb() {
-    await this.navWarenkorbLink.hover()
+  async displayCart() {
+    await this.navCartLink.hover()
   }
 
   async close() {
@@ -30,7 +30,7 @@ export class WarenkorbDropdown {
     }
   }
 
-  async getWarenkorbItem(name: string, variant: string) {
+  async getCartItem(name: string, variant: string) {
     const cartItem = this.cartDropdown
       .getByTestId("cart-item")
       .filter({

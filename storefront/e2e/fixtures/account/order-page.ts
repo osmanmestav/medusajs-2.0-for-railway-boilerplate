@@ -9,8 +9,8 @@ export class OrderPage extends AccountPage {
   orderId: Locator
   orderStatus: Locator
   orderPaymentStatus: Locator
-  shippingAdresseSummary: Locator
-  shippingKontaktSummary: Locator
+  shippingAddressSummary: Locator
+  shippingContactSummary: Locator
   shippingMethodSummary: Locator
   paymentMethod: Locator
   paymentAmount: Locator
@@ -33,10 +33,10 @@ export class OrderPage extends AccountPage {
     this.orderId = this.container.getByTestId("order-id")
     this.orderStatus = this.container.getByTestId("order-status")
     this.orderPaymentStatus = this.container.getByTestId("order-payment-status")
-    this.shippingAdresseSummary = this.container.getByTestId(
+    this.shippingAddressSummary = this.container.getByTestId(
       "shipping-address-summary"
     )
-    this.shippingKontaktSummary = this.container.getByTestId(
+    this.shippingContactSummary = this.container.getByTestId(
       "shipping-contact-summary"
     )
     this.shippingMethodSummary = this.container.getByTestId(

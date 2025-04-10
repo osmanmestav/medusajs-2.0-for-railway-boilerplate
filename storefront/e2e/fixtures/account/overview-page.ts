@@ -6,7 +6,7 @@ export class OverviewPage extends AccountPage {
   customerEmail: Locator
   profileCompletion: Locator
   addressesCount: Locator
-  noBestellungenMessage: Locator
+  noOrdersMessage: Locator
   ordersWrapper: Locator
   orderWrapper: Locator
   overviewWrapper: Locator
@@ -20,7 +20,7 @@ export class OverviewPage extends AccountPage {
       "customer-profile-completion"
     )
     this.addressesCount = this.container.getByTestId("addresses-count")
-    this.noBestellungenMessage = this.container.getByTestId("no-orders-message")
+    this.noOrdersMessage = this.container.getByTestId("no-orders-message")
     this.ordersWrapper = this.container.getByTestId("orders-wrapper")
     this.orderWrapper = this.container.getByTestId("order-wrapper")
   }
@@ -40,7 +40,7 @@ export class OverviewPage extends AccountPage {
   }
 
   async goto() {
-    await this.navMenü.navAccountLink.click()
+    await this.navMenu.navAccountLink.click()
     await this.container.waitFor({ state: "visible" })
   }
 }

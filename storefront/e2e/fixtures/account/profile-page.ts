@@ -8,37 +8,37 @@ export class ProfilePage extends AccountPage {
   accountEmailEditor: Locator
   accountPhoneEditor: Locator
   accountPasswordEditor: Locator
-  accountBillingAdresseEditor: Locator
+  accountBillingAddressEditor: Locator
 
   nameEditButton: Locator
   emailEditButton: Locator
   phoneEditButton: Locator
   passwordEditButton: Locator
-  billingAdresseEditButton: Locator
+  billingAddressEditButton: Locator
 
   nameSaveButton: Locator
   emailSaveButton: Locator
   phoneSaveButton: Locator
   passwordSaveButton: Locator
-  billingAdresseSaveButton: Locator
+  billingAddressSaveButton: Locator
 
   savedName: Locator
   savedEmail: Locator
   savedPhone: Locator
   savedPassword: Locator
-  savedBillingAdresse: Locator
+  savedBillingAddress: Locator
 
   nameSuccessMessage: Locator
   emailSuccessMessage: Locator
   phoneSuccessMessage: Locator
   passwordSuccessMessage: Locator
-  billingAdresseSuccessMessage: Locator
+  billingAddressSuccessMessage: Locator
 
   nameErrorMessage: Locator
   emailErrorMessage: Locator
   phoneErrorMessage: Locator
   passwordErrorMessage: Locator
-  billingAdresseErrorMessage: Locator
+  billingAddressErrorMessage: Locator
 
   emailInput: Locator
   firstNameInput: Locator
@@ -50,8 +50,8 @@ export class ProfilePage extends AccountPage {
   newPasswordInput: Locator
   confirmPasswordInput: Locator
 
-  billingAdresse1Input: Locator
-  billingAdresse2Input: Locator
+  billingAddress1Input: Locator
+  billingAddress2Input: Locator
   billingCityInput: Locator
   billingCompanyInput: Locator
   billingFirstNameInput: Locator
@@ -69,7 +69,7 @@ export class ProfilePage extends AccountPage {
     this.accountPasswordEditor = this.container.getByTestId(
       "account-password-editor"
     )
-    this.accountBillingAdresseEditor = this.container.getByTestId(
+    this.accountBillingAddressEditor = this.container.getByTestId(
       "account-billing-address-editor"
     )
 
@@ -78,23 +78,23 @@ export class ProfilePage extends AccountPage {
     this.phoneEditButton = this.accountPhoneEditor.getByTestId("edit-button")
     this.passwordEditButton =
       this.accountPasswordEditor.getByTestId("edit-button")
-    this.billingAdresseEditButton =
-      this.accountBillingAdresseEditor.getByTestId("edit-button")
+    this.billingAddressEditButton =
+      this.accountBillingAddressEditor.getByTestId("edit-button")
 
     this.nameSaveButton = this.accountNameEditor.getByTestId("save-button")
     this.emailSaveButton = this.accountEmailEditor.getByTestId("save-button")
     this.phoneSaveButton = this.accountPhoneEditor.getByTestId("save-button")
     this.passwordSaveButton =
       this.accountPasswordEditor.getByTestId("save-button")
-    this.billingAdresseSaveButton =
-      this.accountBillingAdresseEditor.getByTestId("save-button")
+    this.billingAddressSaveButton =
+      this.accountBillingAddressEditor.getByTestId("save-button")
 
     this.savedName = this.accountNameEditor.getByTestId("current-info")
     this.savedEmail = this.accountEmailEditor.getByTestId("current-info")
     this.savedPhone = this.accountPhoneEditor.getByTestId("current-info")
     this.savedPassword = this.accountPasswordEditor.getByTestId("current-info")
-    this.savedBillingAdresse =
-      this.accountBillingAdresseEditor.getByTestId("current-info")
+    this.savedBillingAddress =
+      this.accountBillingAddressEditor.getByTestId("current-info")
     this.nameSuccessMessage =
       this.accountNameEditor.getByTestId("success-message")
     this.emailSuccessMessage =
@@ -103,8 +103,8 @@ export class ProfilePage extends AccountPage {
       this.accountPhoneEditor.getByTestId("success-message")
     this.passwordSuccessMessage =
       this.accountPasswordEditor.getByTestId("success-message")
-    this.billingAdresseSuccessMessage =
-      this.accountBillingAdresseEditor.getByTestId("success-message")
+    this.billingAddressSuccessMessage =
+      this.accountBillingAddressEditor.getByTestId("success-message")
     this.nameErrorMessage = this.accountNameEditor.getByTestId("error-message")
     this.emailErrorMessage =
       this.accountEmailEditor.getByTestId("error-message")
@@ -112,8 +112,8 @@ export class ProfilePage extends AccountPage {
       this.accountPhoneEditor.getByTestId("error-message")
     this.passwordErrorMessage =
       this.accountPasswordEditor.getByTestId("error-message")
-    this.billingAdresseErrorMessage =
-      this.accountBillingAdresseEditor.getByTestId("error-message")
+    this.billingAddressErrorMessage =
+      this.accountBillingAddressEditor.getByTestId("error-message")
 
     this.firstNameInput = page.getByTestId("first-name-input")
     this.lastNameInput = page.getByTestId("last-name-input")
@@ -123,8 +123,8 @@ export class ProfilePage extends AccountPage {
     this.newPasswordInput = page.getByTestId("new-password-input")
     this.confirmPasswordInput = page.getByTestId("confirm-password-input")
 
-    this.billingAdresse1Input = page.getByTestId("billing-address-1-input")
-    this.billingAdresse2Input = page.getByTestId("billing-address-2-input")
+    this.billingAddress1Input = page.getByTestId("billing-address-1-input")
+    this.billingAddress2Input = page.getByTestId("billing-address-2-input")
     this.billingCityInput = page.getByTestId("billing-city-input")
     this.billingCompanyInput = page.getByTestId("billing-company-input")
     this.billingFirstNameInput = page.getByTestId("billing-first-name-input")

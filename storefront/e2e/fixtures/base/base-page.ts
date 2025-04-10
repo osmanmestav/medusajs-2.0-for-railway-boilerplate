@@ -1,12 +1,12 @@
-import { WarenkorbDropdown } from "./cart-dropdown"
-import { NavMenü } from "./nav-menu"
+import { CartDropdown } from "./cart-dropdown"
+import { NavMenu } from "./nav-menu"
 import { Page, Locator } from "@playwright/test"
 import { SearchModal } from "./search-modal"
 
 export class BasePage {
   page: Page
-  navMenü: NavMenü
-  cartDropdown: WarenkorbDropdown
+  navMenu: NavMenu
+  cartDropdown: CartDropdown
   searchModal: SearchModal
   accountLink: Locator
   cartLink: Locator
@@ -16,8 +16,8 @@ export class BasePage {
 
   constructor(page: Page) {
     this.page = page
-    this.navMenü = new NavMenü(page)
-    this.cartDropdown = new WarenkorbDropdown(page)
+    this.navMenu = new NavMenu(page)
+    this.cartDropdown = new CartDropdown(page)
     this.searchModal = new SearchModal(page)
     this.accountLink = page.getByTestId("nav-account-link")
     this.cartLink = page.getByTestId("nav-cart-link")

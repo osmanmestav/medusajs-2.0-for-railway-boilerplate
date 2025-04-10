@@ -1,10 +1,10 @@
-import { AdresseesPage } from "../../fixtures/account/addresses-page"
+import { AddressesPage } from "../../fixtures/account/addresses-page"
 import { test, expect } from "../../index"
 import { getSelectedOptionText } from "../../utils/locators"
 
-test.describe("Adressees tests", () => {
+test.describe("Addresses tests", () => {
   test("Creating a new address is displayed during checkout", async ({
-    accountAdresseesPage: addressesPage,
+    accountAddressesPage: addressesPage,
     cartPage,
     checkoutPage,
     productPage,
@@ -12,12 +12,12 @@ test.describe("Adressees tests", () => {
   }) => {
     await test.step("Navigate to the new address modal", async () => {
       await addressesPage.goto()
-      await addressesPage.newAdresseButton.click()
-      await addressesPage.addAdresseModal.container.waitFor({ state: "visible" })
+      await addressesPage.newAddressButton.click()
+      await addressesPage.addAddressModal.container.waitFor({ state: "visible" })
     })
 
     await test.step("Inputs and saves the new address", async () => {
-      const modal = addressesPage.addAdresseModal
+      const modal = addressesPage.addAddressModal
       await modal.firstNameInput.fill("First")
       await modal.lastNameInput.fill("Last")
       await modal.companyInput.fill("FirstCorp")
@@ -42,19 +42,19 @@ test.describe("Adressees tests", () => {
       await productPage.container.waitFor({ state: "visible" })
       await productPage.selectOption("M")
       await productPage.addProductButton.click()
-      await productPage.cartDropdown.navWarenkorbLink.click()
-      await productPage.cartDropdown.goToWarenkorbButton.click()
+      await productPage.cartDropdown.navCartLink.click()
+      await productPage.cartDropdown.goToCartButton.click()
       await cartPage.container.waitFor({ state: "visible" })
       await cartPage.checkoutButton.click()
       await checkoutPage.container.waitFor({ state: "visible" })
     })
 
     await test.step("Verify the address is correct in the checkout process", async () => {
-      await checkoutPage.selectSavedAdresse("123 Fake Street")
+      await checkoutPage.selectSavedAddress("123 Fake Street")
       await expect(checkoutPage.shippingFirstNameInput).toHaveValue("First")
       await expect(checkoutPage.shippingLastNameInput).toHaveValue("Last")
       await expect(checkoutPage.shippingCompanyInput).toHaveValue("FirstCorp")
-      await expect(checkoutPage.shippingAdresseInput).toHaveValue(
+      await expect(checkoutPage.shippingAddressInput).toHaveValue(
         "123 Fake Street"
       )
       await expect(checkoutPage.shippingPostalCodeInput).toHaveValue("11111")
@@ -70,33 +70,33 @@ test.describe("Adressees tests", () => {
   })
 
   test("Performing all the CRUD actions for an address", async ({
-    accountAdresseesPage: addressesPage,
+    accountAddressesPage: addressesPage,
   }) => {
     await test.step("Navigate to the new address modal", async () => {
       await addressesPage.goto()
-      await addressesPage.newAdresseButton.click()
-      await addressesPage.addAdresseModal.container.waitFor({ state: "visible" })
+      await addressesPage.newAddressButton.click()
+      await addressesPage.addAddressModal.container.waitFor({ state: "visible" })
     })
 
     await test.step("Input and save a new address", async () => {
-      const { addAdresseModal } = addressesPage
-      await addAdresseModal.firstNameInput.fill("First")
-      await addAdresseModal.lastNameInput.fill("Last")
-      await addAdresseModal.companyInput.fill("MyCorp")
-      await addAdresseModal.address1Input.fill("123 Fake Street")
-      await addAdresseModal.address2Input.fill("Apt 1")
-      await addAdresseModal.postalCodeInput.fill("80010")
-      await addAdresseModal.cityInput.fill("Denver")
-      await addAdresseModal.stateInput.fill("Colorado")
-      await addAdresseModal.countrySelect.selectOption({ label: "United States" })
-      await addAdresseModal.phoneInput.fill("3031112222")
-      await addAdresseModal.saveButton.click()
-      await addAdresseModal.container.waitFor({ state: "hidden" })
+      const { addAddressModal } = addressesPage
+      await addAddressModal.firstNameInput.fill("First")
+      await addAddressModal.lastNameInput.fill("Last")
+      await addAddressModal.companyInput.fill("MyCorp")
+      await addAddressModal.address1Input.fill("123 Fake Street")
+      await addAddressModal.address2Input.fill("Apt 1")
+      await addAddressModal.postalCodeInput.fill("80010")
+      await addAddressModal.cityInput.fill("Denver")
+      await addAddressModal.stateInput.fill("Colorado")
+      await addAddressModal.countrySelect.selectOption({ label: "United States" })
+      await addAddressModal.phoneInput.fill("3031112222")
+      await addAddressModal.saveButton.click()
+      await addAddressModal.container.waitFor({ state: "hidden" })
     })
 
-    let addressContainer: ReturnType<AdresseesPage["getAdresseContainer"]>
+    let addressContainer: ReturnType<AddressesPage["getAddressContainer"]>
     await test.step("Make sure the address container was appended to the page", async () => {
-      addressContainer = addressesPage.getAdresseContainer("First Last")
+      addressContainer = addressesPage.getAddressContainer("First Last")
       await expect(addressContainer.name).toHaveText("First Last")
       await expect(addressContainer.company).toHaveText("MyCorp")
       await expect(addressContainer.address).toContainText("123 Fake Street")
@@ -107,7 +107,7 @@ test.describe("Adressees tests", () => {
 
     await test.step("Refresh the page and assert address was saved", async () => {
       await addressesPage.page.reload()
-      addressContainer = addressesPage.getAdresseContainer("First Last")
+      addressContainer = addressesPage.getAddressContainer("First Last")
       await expect(addressContainer.name).toHaveText("First Last")
       await expect(addressContainer.company).toHaveText("MyCorp")
       await expect(addressContainer.address).toContainText("123 Fake Street")
@@ -118,25 +118,25 @@ test.describe("Adressees tests", () => {
 
     await test.step("Edit the address", async () => {
       await addressContainer.editButton.click()
-      await addressesPage.editAdresseModal.container.waitFor({ state: "visible" })
-      await addressesPage.editAdresseModal.firstNameInput.fill("Second")
-      await addressesPage.editAdresseModal.lastNameInput.fill("Final")
-      await addressesPage.editAdresseModal.companyInput.fill("MeCorp")
-      await addressesPage.editAdresseModal.address1Input.fill("123 Spark Street")
-      await addressesPage.editAdresseModal.address2Input.fill("Unit 3")
-      await addressesPage.editAdresseModal.postalCodeInput.fill("80011")
-      await addressesPage.editAdresseModal.cityInput.fill("Broomfield")
-      await addressesPage.editAdresseModal.stateInput.fill("CO")
-      await addressesPage.editAdresseModal.countrySelect.selectOption({
+      await addressesPage.editAddressModal.container.waitFor({ state: "visible" })
+      await addressesPage.editAddressModal.firstNameInput.fill("Second")
+      await addressesPage.editAddressModal.lastNameInput.fill("Final")
+      await addressesPage.editAddressModal.companyInput.fill("MeCorp")
+      await addressesPage.editAddressModal.address1Input.fill("123 Spark Street")
+      await addressesPage.editAddressModal.address2Input.fill("Unit 3")
+      await addressesPage.editAddressModal.postalCodeInput.fill("80011")
+      await addressesPage.editAddressModal.cityInput.fill("Broomfield")
+      await addressesPage.editAddressModal.stateInput.fill("CO")
+      await addressesPage.editAddressModal.countrySelect.selectOption({
         label: "Canada",
       })
-      await addressesPage.editAdresseModal.phoneInput.fill("3032223333")
-      await addressesPage.editAdresseModal.saveButton.click()
-      await addressesPage.editAdresseModal.container.waitFor({ state: "hidden" })
+      await addressesPage.editAddressModal.phoneInput.fill("3032223333")
+      await addressesPage.editAddressModal.saveButton.click()
+      await addressesPage.editAddressModal.container.waitFor({ state: "hidden" })
     })
 
     await test.step("Make sure edits were saved on the addressContainer", async () => {
-      addressContainer = addressesPage.getAdresseContainer("Second Final")
+      addressContainer = addressesPage.getAddressContainer("Second Final")
       await expect(addressContainer.name).toContainText("Second Final")
       await expect(addressContainer.company).toContainText("MeCorp")
       await expect(addressContainer.address).toContainText("123 Spark Street, Unit 3")
@@ -167,47 +167,47 @@ test.describe("Adressees tests", () => {
   })
 
   test.skip("Attempt to create duplicate addresses on the address page", async ({
-    accountAdresseesPage: addressesPage
+    accountAddressesPage: addressesPage
   }) => {
     await test.step("navigate to the new address modal", async () => {
       await addressesPage.goto()
-      await addressesPage.newAdresseButton.click()
-      await addressesPage.addAdresseModal.container.waitFor({ state: "visible" })
+      await addressesPage.newAddressButton.click()
+      await addressesPage.addAddressModal.container.waitFor({ state: "visible" })
     })
 
     await test.step("Input and save a new address", async () => {
-      await addressesPage.addAdresseModal.firstNameInput.fill("First")
-      await addressesPage.addAdresseModal.lastNameInput.fill("Last")
-      await addressesPage.addAdresseModal.companyInput.fill("MyCorp")
-      await addressesPage.addAdresseModal.address1Input.fill("123 Fake Street")
-      await addressesPage.addAdresseModal.address2Input.fill("Apt 1")
-      await addressesPage.addAdresseModal.postalCodeInput.fill("80010")
-      await addressesPage.addAdresseModal.cityInput.fill("Denver")
-      await addressesPage.addAdresseModal.stateInput.fill("Colorado")
-      await addressesPage.addAdresseModal.countrySelect.selectOption({
+      await addressesPage.addAddressModal.firstNameInput.fill("First")
+      await addressesPage.addAddressModal.lastNameInput.fill("Last")
+      await addressesPage.addAddressModal.companyInput.fill("MyCorp")
+      await addressesPage.addAddressModal.address1Input.fill("123 Fake Street")
+      await addressesPage.addAddressModal.address2Input.fill("Apt 1")
+      await addressesPage.addAddressModal.postalCodeInput.fill("80010")
+      await addressesPage.addAddressModal.cityInput.fill("Denver")
+      await addressesPage.addAddressModal.stateInput.fill("Colorado")
+      await addressesPage.addAddressModal.countrySelect.selectOption({
         label: "United States",
       })
-      await addressesPage.addAdresseModal.phoneInput.fill("3031112222")
-      await addressesPage.addAdresseModal.saveButton.click()
-      await addressesPage.addAdresseModal.container.waitFor({ state: "hidden" })
+      await addressesPage.addAddressModal.phoneInput.fill("3031112222")
+      await addressesPage.addAddressModal.saveButton.click()
+      await addressesPage.addAddressModal.container.waitFor({ state: "hidden" })
     })
 
     await test.step("Attempt to create the same address", async () => {
-      await addressesPage.newAdresseButton.click()
-      await addressesPage.addAdresseModal.container.waitFor({ state: "visible" })
-      await addressesPage.addAdresseModal.firstNameInput.fill("First")
-      await addressesPage.addAdresseModal.lastNameInput.fill("Last")
-      await addressesPage.addAdresseModal.companyInput.fill("MyCorp")
-      await addressesPage.addAdresseModal.address1Input.fill("123 Fake Street")
-      await addressesPage.addAdresseModal.address2Input.fill("Apt 1")
-      await addressesPage.addAdresseModal.postalCodeInput.fill("80010")
-      await addressesPage.addAdresseModal.cityInput.fill("Denver")
-      await addressesPage.addAdresseModal.stateInput.fill("Colorado")
-      await addressesPage.addAdresseModal.countrySelect.selectOption({
+      await addressesPage.newAddressButton.click()
+      await addressesPage.addAddressModal.container.waitFor({ state: "visible" })
+      await addressesPage.addAddressModal.firstNameInput.fill("First")
+      await addressesPage.addAddressModal.lastNameInput.fill("Last")
+      await addressesPage.addAddressModal.companyInput.fill("MyCorp")
+      await addressesPage.addAddressModal.address1Input.fill("123 Fake Street")
+      await addressesPage.addAddressModal.address2Input.fill("Apt 1")
+      await addressesPage.addAddressModal.postalCodeInput.fill("80010")
+      await addressesPage.addAddressModal.cityInput.fill("Denver")
+      await addressesPage.addAddressModal.stateInput.fill("Colorado")
+      await addressesPage.addAddressModal.countrySelect.selectOption({
         label: "United States",
       })
-      await addressesPage.addAdresseModal.phoneInput.fill("3031112222")
-      await addressesPage.addAdresseModal.saveButton.click()
+      await addressesPage.addAddressModal.phoneInput.fill("3031112222")
+      await addressesPage.addAddressModal.saveButton.click()
     })
 
     await test.step("Validate error state", async () => {
@@ -216,36 +216,36 @@ test.describe("Adressees tests", () => {
   })
 
   test("Creating multiple tests works correctly", async ({
-    accountAdresseesPage: addressesPage,
+    accountAddressesPage: addressesPage,
   }) => {
     test.slow()
     await test.step("Navigate to the new address modal", async () => {
       await addressesPage.goto()
     })
 
-    let addressContainer: ReturnType<AdresseesPage["getAdresseContainer"]>
+    let addressContainer: ReturnType<AddressesPage["getAddressContainer"]>
     for (let i = 0; i < 10; i++) {
       await test.step("Open up the new address modal", async () => {
-        await addressesPage.newAdresseButton.click()
-        await addressesPage.addAdresseModal.container.waitFor({ state: "visible" })
+        await addressesPage.newAddressButton.click()
+        await addressesPage.addAddressModal.container.waitFor({ state: "visible" })
       })
       await test.step("Input and save a new address", async () => {
-        const { addAdresseModal } = addressesPage
-        await addAdresseModal.firstNameInput.fill(`First-${i}`)
-        await addAdresseModal.lastNameInput.fill(`Last-${i}`)
-        await addAdresseModal.companyInput.fill(`MyCorp-${i}`)
-        await addAdresseModal.address1Input.fill(`123 Fake Street-${i}`)
-        await addAdresseModal.address2Input.fill("Apt 1")
-        await addAdresseModal.postalCodeInput.fill("80010")
-        await addAdresseModal.cityInput.fill("Denver")
-        await addAdresseModal.stateInput.fill("Colorado")
-        await addAdresseModal.countrySelect.selectOption({ label: "United States" })
-        await addAdresseModal.phoneInput.fill("3031112222")
-        await addAdresseModal.saveButton.click()
-        await addAdresseModal.container.waitFor({ state: "hidden" })
+        const { addAddressModal } = addressesPage
+        await addAddressModal.firstNameInput.fill(`First-${i}`)
+        await addAddressModal.lastNameInput.fill(`Last-${i}`)
+        await addAddressModal.companyInput.fill(`MyCorp-${i}`)
+        await addAddressModal.address1Input.fill(`123 Fake Street-${i}`)
+        await addAddressModal.address2Input.fill("Apt 1")
+        await addAddressModal.postalCodeInput.fill("80010")
+        await addAddressModal.cityInput.fill("Denver")
+        await addAddressModal.stateInput.fill("Colorado")
+        await addAddressModal.countrySelect.selectOption({ label: "United States" })
+        await addAddressModal.phoneInput.fill("3031112222")
+        await addAddressModal.saveButton.click()
+        await addAddressModal.container.waitFor({ state: "hidden" })
       })
       await test.step("Make sure the address container was appended to the page", async () => {
-        addressContainer = addressesPage.getAdresseContainer(`First-${i} Last-${i}`)
+        addressContainer = addressesPage.getAddressContainer(`First-${i} Last-${i}`)
         await expect(addressContainer.name).toHaveText(`First-${i} Last-${i}`)
         await expect(addressContainer.company).toHaveText(`MyCorp-${i}`)
         await expect(addressContainer.address).toContainText(`123 Fake Street-${i}`)

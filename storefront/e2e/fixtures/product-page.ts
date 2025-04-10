@@ -14,7 +14,7 @@ export class ProductPage extends BasePage {
   mobileActionsContainer: Locator
   mobileTitle: Locator
   mobileActionsButton: Locator
-  mobileAddToWarenkorbButton: Locator
+  mobileAddToCartButton: Locator
 
   constructor(page: Page) {
     super(page)
@@ -29,7 +29,7 @@ export class ProductPage extends BasePage {
     this.addProductButton = this.container.getByTestId("add-product-button")
     this.mobileActionsContainer = page.getByTestId("mobile-actions")
     this.mobileTitle = this.mobileActionsContainer.getByTestId("mobile-title")
-    this.mobileAddToWarenkorbButton = this.mobileActionsContainer.getByTestId(
+    this.mobileAddToCartButton = this.mobileActionsContainer.getByTestId(
       "mobile-actions-button"
     )
     this.mobileActionsButton = this.mobileActionsContainer.getByTestId(

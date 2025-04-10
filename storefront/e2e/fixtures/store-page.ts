@@ -10,8 +10,8 @@ export class StorePage extends CategoryPage {
   }
 
   async goto() {
-    await this.navMenü.open()
-    await this.navMenü.storeLink.click()
+    await this.navMenu.open()
+    await this.navMenu.storeLink.click()
     await this.pageTitle.waitFor({ state: "visible" })
     await this.productsListLoader.waitFor({ state: "hidden" })
   }

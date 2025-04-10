@@ -1,24 +1,24 @@
 import { Locator, Page } from "@playwright/test"
 import { AccountPage } from "./account-page"
-import { AdresseModal } from "./modals/address-modal"
+import { AddressModal } from "./modals/address-modal"
 
-export class AdresseesPage extends AccountPage {
-  addAdresseModal: AdresseModal
-  editAdresseModal: AdresseModal
+export class AddressesPage extends AccountPage {
+  addAddressModal: AddressModal
+  editAddressModal: AddressModal
   addressContainer: Locator
   addressesWrapper: Locator
-  newAdresseButton: Locator
+  newAddressButton: Locator
 
   constructor(page: Page) {
     super(page)
-    this.addAdresseModal = new AdresseModal(page, "add")
-    this.editAdresseModal = new AdresseModal(page, "edit")
+    this.addAddressModal = new AddressModal(page, "add")
+    this.editAddressModal = new AddressModal(page, "edit")
     this.addressContainer = this.container.getByTestId("address-container")
     this.addressesWrapper = page.getByTestId("addresses-page-wrapper")
-    this.newAdresseButton = this.container.getByTestId("add-address-button")
+    this.newAddressButton = this.container.getByTestId("add-address-button")
   }
 
-  getAdresseContainer(text: string) {
+  getAddressContainer(text: string) {
     const container = this.page
       .getByTestId("address-container")
       .filter({ hasText: text })

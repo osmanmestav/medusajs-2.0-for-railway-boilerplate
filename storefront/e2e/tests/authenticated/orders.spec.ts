@@ -1,11 +1,11 @@
 import { test, expect } from "../../index"
 
 test.describe("Account orders page tests", async () => {
-  test.beforeEach(async ({ accountAdresseesPage }) => {
-    await accountAdresseesPage.goto()
-    await accountAdresseesPage.newAdresseButton.click()
+  test.beforeEach(async ({ accountAddressesPage }) => {
+    await accountAddressesPage.goto()
+    await accountAddressesPage.newAddressButton.click()
     await test.step("Add default address", async () => {
-      const modal = accountAdresseesPage.addAdresseModal
+      const modal = accountAddressesPage.addAddressModal
       await modal.container.waitFor({ state: "visible" })
       await modal.firstNameInput.fill("First")
       await modal.lastNameInput.fill("Last")
@@ -25,14 +25,14 @@ test.describe("Account orders page tests", async () => {
   })
 
   test("Verify account orders page displays empty container", async ({
-    accountBestellungenPage,
+    accountOrdersPage,
   }) => {
-    await accountBestellungenPage.goto()
-    await expect(accountBestellungenPage.noBestellungenContainer).toBeVisible()
+    await accountOrdersPage.goto()
+    await expect(accountOrdersPage.noOrdersContainer).toBeVisible()
   })
 
   test("Order shows up after checkout flow", async ({
-    accountBestellungenPage,
+    accountOrdersPage,
     accountOrderPage,
     cartPage,
     checkoutPage,
@@ -51,18 +51,18 @@ test.describe("Account orders page tests", async () => {
     await test.step("Add the product to the cart and goto checkout", async () => {
       await productPage.selectOption("M")
       await productPage.clickAddProduct()
-      await productPage.cartDropdown.navWarenkorbLink.click()
-      await productPage.cartDropdown.goToWarenkorbButton.click()
+      await productPage.cartDropdown.navCartLink.click()
+      await productPage.cartDropdown.goToCartButton.click()
       await cartPage.container.waitFor({ state: "visible" })
       await cartPage.checkoutButton.click()
       await checkoutPage.container.waitFor({ state: "visible" })
     })
 
     await test.step("Enter in the first step of the checkout process", async () => {
-      await checkoutPage.selectSavedAdresse("123 Fake Street")
+      await checkoutPage.selectSavedAddress("123 Fake Street")
       await checkoutPage.shippingEmailInput.fill("test@example.com")
       await checkoutPage.shippingPhoneInput.fill("3031112222")
-      await checkoutPage.submitAdresseButton.click()
+      await checkoutPage.submitAddressButton.click()
       await checkoutPage.deliveryOptionsContainer.waitFor({ state: "visible" })
     })
 
@@ -86,7 +86,7 @@ test.describe("Account orders page tests", async () => {
       })
 
       await test.step("Verify the shipping info is correct", async () => {
-        const address = publicOrderPage.shippingAdresseSummary
+        const address = publicOrderPage.shippingAddressSummary
         await expect(address).toContainText("First")
         await expect(address).toContainText("Last")
         await expect(address).toContainText("123 Fake Street")
@@ -94,7 +94,7 @@ test.describe("Account orders page tests", async () => {
         await expect(address).toContainText("City")
         await expect(address).toContainText("US")
 
-        const contact = publicOrderPage.shippingKontaktSummary
+        const contact = publicOrderPage.shippingContactSummary
         await expect(contact).toContainText("test@example.com")
         await expect(contact).toContainText("3031112222")
 
@@ -104,8 +104,8 @@ test.describe("Account orders page tests", async () => {
     })
 
     await test.step("Verify the account orders page displays a result", async () => {
-      await accountBestellungenPage.goto()
-      const order = await accountBestellungenPage.getOrderById(orderId)
+      await accountOrdersPage.goto()
+      const order = await accountOrdersPage.getOrderById(orderId)
       expect(order.items.length).toBe(1)
       expect(order.items[0].title).toContainText("Sweatshirt")
       expect(order.items[0].quantity).toHaveText("1")
@@ -126,7 +126,7 @@ test.describe("Account orders page tests", async () => {
       })
 
       await test.step("Verify the shipping info is correct", async () => {
-        const address = accountOrderPage.shippingAdresseSummary
+        const address = accountOrderPage.shippingAddressSummary
         await expect(address).toContainText("First")
         await expect(address).toContainText("Last")
         await expect(address).toContainText("123 Fake Street")
@@ -134,7 +134,7 @@ test.describe("Account orders page tests", async () => {
         await expect(address).toContainText("City")
         await expect(address).toContainText("US")
 
-        const contact = accountOrderPage.shippingKontaktSummary
+        const contact = accountOrderPage.shippingContactSummary
         await contact.highlight()
         await expect(contact.getByText("test@example.com")).toBeVisible()
         await expect(contact.getByText("3031112222")).toBeVisible()
@@ -147,12 +147,12 @@ test.describe("Account orders page tests", async () => {
 
     await test.step("Navigate back to the orders page, verifying back button works", async () => {
       await accountOrderPage.backToOverviewButton.click()
-      await accountBestellungenPage.container.waitFor({ state: "visible" })
+      await accountOrdersPage.container.waitFor({ state: "visible" })
     })
   })
 
   test("Order preserves item count, and variants", async ({
-    accountBestellungenPage,
+    accountOrdersPage,
     accountOrderPage,
     cartPage,
     checkoutPage,
@@ -197,7 +197,7 @@ test.describe("Account orders page tests", async () => {
       })
 
       await test.step("Navigate to the checkout process", async () => {
-        await productPage.cartDropdown.goToWarenkorbButton.click()
+        await productPage.cartDropdown.goToCartButton.click()
         await productPage.cartDropdown.close()
         await cartPage.container.waitFor({ state: "visible" })
         await cartPage.checkoutButton.click()
@@ -206,12 +206,12 @@ test.describe("Account orders page tests", async () => {
     })
 
     let orderId = ""
-    await test.step("Zur Kasse process", async () => {
+    await test.step("Checkout process", async () => {
       await test.step("Enter in the first step of the checkout process", async () => {
-        await checkoutPage.selectSavedAdresse("123 Fake Street")
+        await checkoutPage.selectSavedAddress("123 Fake Street")
         await checkoutPage.shippingEmailInput.fill("test@example.com")
         await checkoutPage.shippingPhoneInput.fill("3031112222")
-        await checkoutPage.submitAdresseButton.click()
+        await checkoutPage.submitAddressButton.click()
         await checkoutPage.deliveryOptionsContainer.waitFor({
           state: "visible",
         })
@@ -229,8 +229,8 @@ test.describe("Account orders page tests", async () => {
 
     await test.step("Verify the order page information is correct", async () => {
       await test.step("Navigate to the account orders page, verify information, and navigate to the order page", async () => {
-        await accountBestellungenPage.goto()
-        const order = await accountBestellungenPage.getOrderById(orderId)
+        await accountOrdersPage.goto()
+        const order = await accountOrdersPage.getOrderById(orderId)
         expect(order.itemsLocator).toHaveCount(3)
         expect(
           order.itemsLocator.filter({ hasText: "Sweatpants" })
@@ -268,7 +268,7 @@ test.describe("Account orders page tests", async () => {
   })
 
   test("Multiple orders are stored correctly", async ({
-    accountBestellungenPage,
+    accountOrdersPage,
     cartPage,
     checkoutPage,
     orderPage: publicOrderPage,
@@ -289,18 +289,18 @@ test.describe("Account orders page tests", async () => {
       await test.step("Add the product to the cart and goto checkout", async () => {
         await productPage.selectOption("M")
         await productPage.clickAddProduct()
-        await productPage.cartDropdown.navWarenkorbLink.click()
-        await productPage.cartDropdown.goToWarenkorbButton.click()
+        await productPage.cartDropdown.navCartLink.click()
+        await productPage.cartDropdown.goToCartButton.click()
         await cartPage.container.waitFor({ state: "visible" })
         await cartPage.checkoutButton.click()
         await checkoutPage.container.waitFor({ state: "visible" })
       })
 
       await test.step("Enter in the first step of the checkout process", async () => {
-        await checkoutPage.selectSavedAdresse("123 Fake Street")
+        await checkoutPage.selectSavedAddress("123 Fake Street")
         await checkoutPage.shippingEmailInput.fill("test@example.com")
         await checkoutPage.shippingPhoneInput.fill("3031112222")
-        await checkoutPage.submitAdresseButton.click()
+        await checkoutPage.submitAddressButton.click()
         await checkoutPage.deliveryOptionsContainer.waitFor({
           state: "visible",
         })
@@ -328,18 +328,18 @@ test.describe("Account orders page tests", async () => {
       await test.step("Add the product to the cart and goto checkout", async () => {
         await productPage.selectOption("S")
         await productPage.clickAddProduct()
-        await productPage.cartDropdown.navWarenkorbLink.click()
-        await productPage.cartDropdown.goToWarenkorbButton.click()
+        await productPage.cartDropdown.navCartLink.click()
+        await productPage.cartDropdown.goToCartButton.click()
         await cartPage.container.waitFor({ state: "visible" })
         await cartPage.checkoutButton.click()
         await checkoutPage.container.waitFor({ state: "visible" })
       })
 
       await test.step("Enter in the first step of the checkout process", async () => {
-        await checkoutPage.selectSavedAdresse("123 Fake Street")
+        await checkoutPage.selectSavedAddress("123 Fake Street")
         await checkoutPage.shippingEmailInput.fill("test@example.com")
         await checkoutPage.shippingPhoneInput.fill("3031112222")
-        await checkoutPage.submitAdresseButton.click()
+        await checkoutPage.submitAddressButton.click()
         await checkoutPage.deliveryOptionsContainer.waitFor({
           state: "visible",
         })
@@ -356,15 +356,15 @@ test.describe("Account orders page tests", async () => {
     })
 
     await test.step("Verify there are distinct orders on the orders page", async () => {
-      await accountBestellungenPage.goto()
+      await accountOrdersPage.goto()
       await test.step("Verify the first order info", async () => {
-        const order = await accountBestellungenPage.getOrderById(firstOrderId)
+        const order = await accountOrdersPage.getOrderById(firstOrderId)
         await expect(order.itemsLocator).toHaveCount(1)
         await expect(order.items[0].title).toContainText("Sweatshirt")
         await expect(order.items[0].quantity).toHaveText("1")
       })
       await test.step("Verify the second order info", async () => {
-        const order = await accountBestellungenPage.getOrderById(secondOrderId)
+        const order = await accountOrdersPage.getOrderById(secondOrderId)
         await expect(order.itemsLocator).toHaveCount(1)
         await expect(order.items[0].title).toContainText("Sweatpants")
         await expect(order.items[0].quantity).toHaveText("1")
