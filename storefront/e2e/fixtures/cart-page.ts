@@ -1,9 +1,9 @@
 import { Locator, Page } from "@playwright/test"
 import { BasePage } from "./base/base-page"
 
-export class CartPage extends BasePage {
+export class WarenkorbPage extends BasePage {
   container: Locator
-  emptyCartMessage: Locator
+  emptyWarenkorbMessage: Locator
   signInButton: Locator
   productRow: Locator
   productTitle: Locator
@@ -20,17 +20,17 @@ export class CartPage extends BasePage {
   giftCardAmount: Locator
   giftCardRemoveButton: Locator
   cartSubtotal: Locator
-  cartDiscount: Locator
+  cartRabatt: Locator
   cartGiftCardAmount: Locator
-  cartShipping: Locator
+  cartVersand: Locator
   cartTaxes: Locator
-  cartTotal: Locator
+  cartGesamt: Locator
   checkoutButton: Locator
 
   constructor(page: Page) {
     super(page)
     this.container = page.getByTestId("cart-container")
-    this.emptyCartMessage = this.container.getByTestId("empty-cart-message")
+    this.emptyWarenkorbMessage = this.container.getByTestId("empty-cart-message")
     this.signInButton = this.container.getByTestId("sign-in-button")
     this.productRow = this.container.getByTestId("product-row")
     this.productTitle = this.container.getByTestId("product-title")
@@ -58,13 +58,13 @@ export class CartPage extends BasePage {
       "remove-gift-card-button"
     )
     this.cartSubtotal = this.container.getByTestId("cart-subtotal")
-    this.cartDiscount = this.container.getByTestId("cart-discount")
+    this.cartRabatt = this.container.getByTestId("cart-discount")
     this.cartGiftCardAmount = this.container.getByTestId(
       "cart-gift-card-amount"
     )
-    this.cartShipping = this.container.getByTestId("cart-shipping")
+    this.cartVersand = this.container.getByTestId("cart-shipping")
     this.cartTaxes = this.container.getByTestId("cart-taxes")
-    this.cartTotal = this.container.getByTestId("cart-total")
+    this.cartGesamt = this.container.getByTestId("cart-total")
   }
 
   async getProduct(title: string, variant: string) {
@@ -100,7 +100,7 @@ export class CartPage extends BasePage {
     }
   }
 
-  async getDiscount(code: string) {
+  async getRabatt(code: string) {
     const discount = this.discountRow
     const amount = discount.getByTestId("discount-amount")
     return {

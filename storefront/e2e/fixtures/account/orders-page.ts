@@ -1,9 +1,9 @@
 import { Locator, Page } from "@playwright/test"
 import { AccountPage } from "./account-page"
 
-export class OrdersPage extends AccountPage {
+export class BestellungenPage extends AccountPage {
   ordersWrapper: Locator
-  noOrdersContainer: Locator
+  noBestellungenContainer: Locator
   continueShoppingButton: Locator
   orderCard: Locator
   orderDisplayId: Locator
@@ -11,7 +11,7 @@ export class OrdersPage extends AccountPage {
   constructor(page: Page) {
     super(page)
     this.ordersWrapper = page.getByTestId("orders-page-wrapper")
-    this.noOrdersContainer = page.getByTestId("no-orders-container")
+    this.noBestellungenContainer = page.getByTestId("no-orders-container")
     this.continueShoppingButton = page.getByTestId("continue-shopping-button")
     this.orderCard = page.getByTestId("order-card")
     this.orderDisplayId = page.getByTestId("order-display-id")

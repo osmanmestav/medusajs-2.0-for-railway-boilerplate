@@ -1,20 +1,20 @@
 import { ElementHandle, Locator, Page } from "@playwright/test"
 import { BasePage } from "./base/base-page"
 
-export class CheckoutPage extends BasePage {
-  backToCartLink: Locator
+export class Zur KassePage extends BasePage {
+  backToWarenkorbLink: Locator
   storeLink: Locator
   container: Locator
-  editAddressButton: Locator
+  editAdresseButton: Locator
   editDeliveryButton: Locator
   editPaymentButton: Locator
 
-  shippingAddressSelect: Locator
-  shippingAddressOptions: Locator
-  shippingAddressOption: Locator
+  shippingAdresseSelect: Locator
+  shippingAdresseOptions: Locator
+  shippingAdresseOption: Locator
 
-  billingAddressCheckbox: Locator
-  billingAddressInput: Locator
+  billingAdresseCheckbox: Locator
+  billingAdresseInput: Locator
   billingCityInput: Locator
   billingCompanyInput: Locator
   billingFirstNameInput: Locator
@@ -22,7 +22,7 @@ export class CheckoutPage extends BasePage {
   billingPhoneInput: Locator
   billingPostalInput: Locator
   billingProvinceInput: Locator
-  shippingAddressInput: Locator
+  shippingAdresseInput: Locator
   shippingCityInput: Locator
   shippingCompanyInput: Locator
   shippingEmailInput: Locator
@@ -35,11 +35,11 @@ export class CheckoutPage extends BasePage {
   billingCountrySelect: Locator
   shippingCountrySelect: Locator
 
-  shippingAddressSummary: Locator
-  shippingContactSummary: Locator
-  billingAddressSummary: Locator
+  shippingAdresseSummary: Locator
+  shippingKontaktSummary: Locator
+  billingAdresseSummary: Locator
 
-  submitAddressButton: Locator
+  submitAdresseButton: Locator
   addressErrorMessage: Locator
 
   deliveryOptionsContainer: Locator
@@ -67,11 +67,11 @@ export class CheckoutPage extends BasePage {
   giftCardAmount: Locator
   giftCardRemoveButton: Locator
   cartSubtotal: Locator
-  cartDiscount: Locator
+  cartRabatt: Locator
   cartGiftCardAmount: Locator
-  cartShipping: Locator
+  cartVersand: Locator
   cartTaxes: Locator
-  cartTotal: Locator
+  cartGesamt: Locator
   itemsTable: Locator
   itemRow: Locator
   itemTitle: Locator
@@ -84,27 +84,27 @@ export class CheckoutPage extends BasePage {
 
   constructor(page: Page) {
     super(page)
-    this.backToCartLink = page.getByTestId("back-to-cart-link")
+    this.backToWarenkorbLink = page.getByTestId("back-to-cart-link")
     this.storeLink = page.getByTestId("store-link")
     this.container = page.getByTestId("checkout-container")
 
-    this.editAddressButton = this.container.getByTestId("edit-address-button")
+    this.editAdresseButton = this.container.getByTestId("edit-address-button")
     this.editDeliveryButton = this.container.getByTestId("edit-delivery-button")
     this.editPaymentButton = this.container.getByTestId("edit-payment-button")
 
-    this.shippingAddressSelect = this.container.getByTestId(
+    this.shippingAdresseSelect = this.container.getByTestId(
       "shipping-address-select"
     )
-    this.shippingAddressOptions = this.container.getByTestId(
+    this.shippingAdresseOptions = this.container.getByTestId(
       "shipping-address-options"
     )
-    this.shippingAddressOption = this.container.getByTestId(
+    this.shippingAdresseOption = this.container.getByTestId(
       "shipping-address-option"
     )
-    this.billingAddressCheckbox = this.container.getByTestId(
+    this.billingAdresseCheckbox = this.container.getByTestId(
       "billing-address-checkbox"
     )
-    this.billingAddressInput = this.container.getByTestId(
+    this.billingAdresseInput = this.container.getByTestId(
       "billing-address-input"
     )
     this.billingCityInput = this.container.getByTestId("billing-city-input")
@@ -122,7 +122,7 @@ export class CheckoutPage extends BasePage {
     this.billingProvinceInput = this.container.getByTestId(
       "billing-province-input"
     )
-    this.shippingAddressInput = this.container.getByTestId(
+    this.shippingAdresseInput = this.container.getByTestId(
       "shipping-address-input"
     )
     this.shippingCityInput = this.container.getByTestId("shipping-city-input")
@@ -151,17 +151,17 @@ export class CheckoutPage extends BasePage {
       "shipping-country-select"
     )
 
-    this.shippingAddressSummary = this.container.getByTestId(
+    this.shippingAdresseSummary = this.container.getByTestId(
       "shipping-address-summary"
     )
-    this.shippingContactSummary = this.container.getByTestId(
+    this.shippingKontaktSummary = this.container.getByTestId(
       "shipping-contact-summary"
     )
-    this.billingAddressSummary = this.container.getByTestId(
+    this.billingAdresseSummary = this.container.getByTestId(
       "billing-address-summary"
     )
 
-    this.submitAddressButton = this.container.getByTestId(
+    this.submitAdresseButton = this.container.getByTestId(
       "submit-address-button"
     )
     this.addressErrorMessage = this.container.getByTestId(
@@ -223,13 +223,13 @@ export class CheckoutPage extends BasePage {
       "remove-gift-card-button"
     )
     this.cartSubtotal = this.container.getByTestId("cart-subtotal")
-    this.cartDiscount = this.container.getByTestId("cart-discount")
+    this.cartRabatt = this.container.getByTestId("cart-discount")
     this.cartGiftCardAmount = this.container.getByTestId(
       "cart-gift-card-amount"
     )
-    this.cartShipping = this.container.getByTestId("cart-shipping")
+    this.cartVersand = this.container.getByTestId("cart-shipping")
     this.cartTaxes = this.container.getByTestId("cart-taxes")
-    this.cartTotal = this.container.getByTestId("cart-total")
+    this.cartGesamt = this.container.getByTestId("cart-total")
     this.itemsTable = this.container.getByTestId("items-table")
     this.itemRow = this.container.getByTestId("item-row")
     this.itemTitle = this.container.getByTestId("item-title")
@@ -245,14 +245,14 @@ export class CheckoutPage extends BasePage {
     )
   }
 
-  async selectSavedAddress(address: string) {
-    await this.shippingAddressSelect.click()
-    const addressOption = this.shippingAddressOption.filter({
+  async selectSavedAdresse(address: string) {
+    await this.shippingAdresseSelect.click()
+    const addressOption = this.shippingAdresseOption.filter({
       hasText: address,
     })
     await addressOption.getByTestId("shipping-address-radio").click()
 
-    const selectHandle = await this.shippingAddressSelect.elementHandle()
+    const selectHandle = await this.shippingAdresseSelect.elementHandle()
     await this.page.waitForFunction(
       (opts) => {
         const select = opts[0]
@@ -281,7 +281,7 @@ export class CheckoutPage extends BasePage {
     }
   }
 
-  async getDiscount(code: string) {
+  async getRabatt(code: string) {
     const discount = this.discountRow
     const amount = discount.getByTestId("discount-amount")
     return {

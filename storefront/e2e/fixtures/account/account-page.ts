@@ -15,8 +15,8 @@ export class AccountPage extends BasePage {
   mobileAccountMainLink : Locator
   mobileOverviewLink : Locator
   mobileProfileLink : Locator
-  mobileAddressesLink : Locator
-  mobileOrdersLink : Locator
+  mobileAdresseesLink : Locator
+  mobileBestellungenLink : Locator
   mobileLogoutLink : Locator
 
   constructor(page: Page) {
@@ -33,13 +33,13 @@ export class AccountPage extends BasePage {
     this.mobileAccountMainLink = this.mobileAccountNav.getByTestId("account-main-link")
     this.mobileOverviewLink = this.mobileAccountNav.getByTestId("overview-link")
     this.mobileProfileLink = this.mobileAccountNav.getByTestId("profile-link")
-    this.mobileAddressesLink = this.mobileAccountNav.getByTestId("addresses-link")
-    this.mobileOrdersLink = this.mobileAccountNav.getByTestId("orders-link")
+    this.mobileAdresseesLink = this.mobileAccountNav.getByTestId("addresses-link")
+    this.mobileBestellungenLink = this.mobileAccountNav.getByTestId("orders-link")
     this.mobileLogoutLink = this.mobileAccountNav.getByTestId("logout-button")
   }
 
   async goto() {
-    await this.navMenu.navAccountLink.click()
+    await this.navMenü.navAccountLink.click()
     await this.container.waitFor({ state: "visible" })
   }
 }

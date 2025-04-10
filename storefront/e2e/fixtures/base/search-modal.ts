@@ -1,6 +1,6 @@
 import { Page, Locator } from "@playwright/test"
 import { BaseModal } from "./base-modal"
-import { NavMenu } from "./nav-menu"
+import { NavMenü } from "./nav-menu"
 
 export class SearchModal extends BaseModal {
   searchInput: Locator
@@ -21,7 +21,7 @@ export class SearchModal extends BaseModal {
   }
 
   async open() {
-    const menu = new NavMenu(this.page)
+    const menu = new NavMenü(this.page)
     await menu.open()
     await menu.searchLink.click()
     await this.container.waitFor({ state: "visible" })

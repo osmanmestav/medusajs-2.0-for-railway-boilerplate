@@ -65,7 +65,7 @@ export async function seedGiftcard(axios?: AxiosInstance) {
   }
 }
 
-export async function seedDiscount(axios?: AxiosInstance) {
+export async function seedRabatt(axios?: AxiosInstance) {
   axios = await getOrInitAxios(axios)
   const amount = 2000
   const resp = await axios.post("/admin/discounts", {

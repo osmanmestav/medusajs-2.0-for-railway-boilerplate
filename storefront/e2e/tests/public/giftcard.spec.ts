@@ -33,12 +33,12 @@ test.describe("Gift card tests", async () => {
       await test.step("Add the product to the cart and goto checkout", async () => {
         await productPage.selectOption("M")
         await productPage.clickAddProduct()
-        await productPage.cartDropdown.navCartLink.click()
-        await productPage.cartDropdown.goToCartButton.click()
+        await productPage.cartDropdown.navWarenkorbLink.click()
+        await productPage.cartDropdown.goToWarenkorbButton.click()
         await cartPage.container.waitFor({ state: "visible" })
         await cartPage.cartDropdown.close()
         cartSubtotal =
-          (await cartPage.cartTotal.getAttribute("data-value")) || ""
+          (await cartPage.cartGesamt.getAttribute("data-value")) || ""
       })
       await test.step("Navigate to the checkout page", async () => {
         await cartPage.checkoutButton.click()
@@ -55,17 +55,17 @@ test.describe("Gift card tests", async () => {
       await expect(paymentGiftcard.locator).toBeVisible()
       await expect(paymentGiftcard.code).toHaveText(giftcard.code)
       expect(paymentGiftcard.amountValue).toBe(giftcard.amount)
-      expect(await checkoutPage.cartTotal.getAttribute("data-value")).toBe("0")
+      expect(await checkoutPage.cartGesamt.getAttribute("data-value")).toBe("0")
     })
 
-    let shippingTotal = ""
+    let shippingGesamt = ""
     await test.step("Go through checkout process", async () => {
       await test.step("Enter in the first step of the checkout process", async () => {
         await test.step("Enter in the shipping address info", async () => {
           await checkoutPage.shippingFirstNameInput.fill("First")
           await checkoutPage.shippingLastNameInput.fill("Last")
           await checkoutPage.shippingCompanyInput.fill("MyCorp")
-          await checkoutPage.shippingAddressInput.fill("123 Fake street")
+          await checkoutPage.shippingAdresseInput.fill("123 Fake street")
           await checkoutPage.shippingPostalCodeInput.fill("80010")
           await checkoutPage.shippingCityInput.fill("Denver")
           await checkoutPage.shippingProvinceInput.fill("Colorado")
@@ -75,20 +75,20 @@ test.describe("Gift card tests", async () => {
         await test.step("Enter in the contact info and open the billing info form", async () => {
           await checkoutPage.shippingEmailInput.fill("test@example.com")
           await checkoutPage.shippingPhoneInput.fill("3031112222")
-          await checkoutPage.submitAddressButton.click()
+          await checkoutPage.submitAdresseButton.click()
         })
       })
 
       await test.step("Complete the rest of the payment process", async () => {
         await checkoutPage.selectDeliveryOption("FakeEx Standard")
         await checkoutPage.submitDeliveryOptionButton.click()
-        shippingTotal =
-          (await checkoutPage.cartShipping.getAttribute("data-value")) || ""
+        shippingGesamt =
+          (await checkoutPage.cartVersand.getAttribute("data-value")) || ""
         await checkoutPage.submitPaymentButton.click()
       })
 
       await test.step("Make sure the giftcard still has the total as zero after selecting shipping", async () => {
-        expect(await checkoutPage.cartTotal.getAttribute("data-value")).toBe(
+        expect(await checkoutPage.cartGesamt.getAttribute("data-value")).toBe(
           "0"
         )
       })
@@ -98,16 +98,16 @@ test.describe("Gift card tests", async () => {
         await orderPage.container.waitFor({ state: "visible" })
       })
     })
-    const cartTotal = (Number(cartSubtotal) + Number(shippingTotal)).toString()
+    const cartGesamt = (Number(cartSubtotal) + Number(shippingGesamt)).toString()
 
     await test.step("Assert the order page shows the total was 0", async () => {
-      expect(await orderPage.cartTotal.getAttribute("data-value")).toBe("0")
+      expect(await orderPage.cartGesamt.getAttribute("data-value")).toBe("0")
       expect(await orderPage.cartSubtotal.getAttribute("data-value")).toBe(
         cartSubtotal
       )
       expect(
         await orderPage.cartGiftCardAmount.getAttribute("data-value")
-      ).toBe(cartTotal)
+      ).toBe(cartGesamt)
     })
   })
 
@@ -130,12 +130,12 @@ test.describe("Gift card tests", async () => {
       await test.step("Add the product to the cart and goto checkout", async () => {
         await productPage.selectOption("M")
         await productPage.clickAddProduct()
-        await productPage.cartDropdown.navCartLink.click()
-        await productPage.cartDropdown.goToCartButton.click()
+        await productPage.cartDropdown.navWarenkorbLink.click()
+        await productPage.cartDropdown.goToWarenkorbButton.click()
         await cartPage.container.waitFor({ state: "visible" })
         await cartPage.cartDropdown.close()
         cartSubtotal =
-          (await cartPage.cartTotal.getAttribute("data-value")) || ""
+          (await cartPage.cartGesamt.getAttribute("data-value")) || ""
       })
     })
 
@@ -148,23 +148,23 @@ test.describe("Gift card tests", async () => {
       await expect(paymentGiftcard.locator).toBeVisible()
       await expect(paymentGiftcard.code).toHaveText(giftcard.code)
       expect(paymentGiftcard.amountValue).toBe(giftcard.amount)
-      expect(await cartPage.cartTotal.getAttribute("data-value")).toBe("0")
+      expect(await cartPage.cartGesamt.getAttribute("data-value")).toBe("0")
     })
 
     await test.step("Go to checkout and assert the value is still 0", async () => {
       await cartPage.checkoutButton.click()
       await checkoutPage.container.waitFor({ state: "visible" })
-      expect(await checkoutPage.cartTotal.getAttribute("data-value")).toBe("0")
+      expect(await checkoutPage.cartGesamt.getAttribute("data-value")).toBe("0")
     })
 
-    let shippingTotal = ""
+    let shippingGesamt = ""
     await test.step("Go through checkout process", async () => {
       await test.step("Enter in the first step of the checkout process", async () => {
         await test.step("Enter in the shipping address info", async () => {
           await checkoutPage.shippingFirstNameInput.fill("First")
           await checkoutPage.shippingLastNameInput.fill("Last")
           await checkoutPage.shippingCompanyInput.fill("MyCorp")
-          await checkoutPage.shippingAddressInput.fill("123 Fake street")
+          await checkoutPage.shippingAdresseInput.fill("123 Fake street")
           await checkoutPage.shippingPostalCodeInput.fill("80010")
           await checkoutPage.shippingCityInput.fill("Denver")
           await checkoutPage.shippingProvinceInput.fill("Colorado")
@@ -174,30 +174,30 @@ test.describe("Gift card tests", async () => {
         await test.step("Enter in the contact info and open the billing info form", async () => {
           await checkoutPage.shippingEmailInput.fill("test@example.com")
           await checkoutPage.shippingPhoneInput.fill("3031112222")
-          await checkoutPage.submitAddressButton.click()
+          await checkoutPage.submitAdresseButton.click()
         })
       })
 
       await test.step("Complete the rest of the payment process", async () => {
         await checkoutPage.selectDeliveryOption("FakeEx Standard")
         await checkoutPage.submitDeliveryOptionButton.click()
-        shippingTotal =
-          (await checkoutPage.cartShipping.getAttribute("data-value")) || ""
+        shippingGesamt =
+          (await checkoutPage.cartVersand.getAttribute("data-value")) || ""
         await checkoutPage.submitPaymentButton.click()
         await checkoutPage.submitOrderButton.click()
         await orderPage.container.waitFor({ state: "visible" })
       })
     })
-    const cartTotal = (Number(cartSubtotal) + Number(shippingTotal)).toString()
+    const cartGesamt = (Number(cartSubtotal) + Number(shippingGesamt)).toString()
 
     await test.step("Assert the order page shows the total was 0", async () => {
-      expect(await orderPage.cartTotal.getAttribute("data-value")).toBe("0")
+      expect(await orderPage.cartGesamt.getAttribute("data-value")).toBe("0")
       expect(await orderPage.cartSubtotal.getAttribute("data-value")).toBe(
         cartSubtotal
       )
       expect(
         await orderPage.cartGiftCardAmount.getAttribute("data-value")
-      ).toBe(cartTotal)
+      ).toBe(cartGesamt)
     })
   })
 
@@ -220,12 +220,12 @@ test.describe("Gift card tests", async () => {
       await test.step("Add the product to the cart and goto checkout", async () => {
         await productPage.selectOption("M")
         await productPage.clickAddProduct()
-        await productPage.cartDropdown.navCartLink.click()
-        await productPage.cartDropdown.goToCartButton.click()
+        await productPage.cartDropdown.navWarenkorbLink.click()
+        await productPage.cartDropdown.goToWarenkorbButton.click()
         await cartPage.container.waitFor({ state: "visible" })
         await cartPage.cartDropdown.close()
         cartSubtotal =
-          (await cartPage.cartTotal.getAttribute("data-value")) || ""
+          (await cartPage.cartGesamt.getAttribute("data-value")) || ""
       })
     })
 
@@ -238,29 +238,29 @@ test.describe("Gift card tests", async () => {
       await expect(paymentGiftcard.locator).toBeVisible()
       await expect(paymentGiftcard.code).toHaveText(giftcard.code)
       expect(paymentGiftcard.amountValue).toBe(giftcard.amount)
-      expect(await cartPage.cartTotal.getAttribute("data-value")).toBe("0")
+      expect(await cartPage.cartGesamt.getAttribute("data-value")).toBe("0")
     })
 
     await test.step("Go to checkout and assert the value is still 0", async () => {
       await cartPage.checkoutButton.click()
       await checkoutPage.container.waitFor({ state: "visible" })
-      expect(await checkoutPage.cartTotal.getAttribute("data-value")).toBe("0")
+      expect(await checkoutPage.cartGesamt.getAttribute("data-value")).toBe("0")
       const paymentGiftcard = await checkoutPage.getGiftCard(giftcard.code)
       await paymentGiftcard.removeButton.click()
       await expect(paymentGiftcard.locator).not.toBeVisible()
-      expect(await checkoutPage.cartTotal.getAttribute("data-value")).not.toBe(
+      expect(await checkoutPage.cartGesamt.getAttribute("data-value")).not.toBe(
         "0"
       )
     })
 
-    let shippingTotal = ""
+    let shippingGesamt = ""
     await test.step("Go through checkout process", async () => {
       await test.step("Enter in the first step of the checkout process", async () => {
         await test.step("Enter in the shipping address info", async () => {
           await checkoutPage.shippingFirstNameInput.fill("First")
           await checkoutPage.shippingLastNameInput.fill("Last")
           await checkoutPage.shippingCompanyInput.fill("MyCorp")
-          await checkoutPage.shippingAddressInput.fill("123 Fake street")
+          await checkoutPage.shippingAdresseInput.fill("123 Fake street")
           await checkoutPage.shippingPostalCodeInput.fill("80010")
           await checkoutPage.shippingCityInput.fill("Denver")
           await checkoutPage.shippingProvinceInput.fill("Colorado")
@@ -270,25 +270,25 @@ test.describe("Gift card tests", async () => {
         await test.step("Enter in the contact info and open the billing info form", async () => {
           await checkoutPage.shippingEmailInput.fill("test@example.com")
           await checkoutPage.shippingPhoneInput.fill("3031112222")
-          await checkoutPage.submitAddressButton.click()
+          await checkoutPage.submitAdresseButton.click()
         })
       })
 
       await test.step("Complete the rest of the payment process", async () => {
         await checkoutPage.selectDeliveryOption("FakeEx Standard")
         await checkoutPage.submitDeliveryOptionButton.click()
-        shippingTotal =
-          (await checkoutPage.cartShipping.getAttribute("data-value")) || ""
+        shippingGesamt =
+          (await checkoutPage.cartVersand.getAttribute("data-value")) || ""
         await checkoutPage.submitPaymentButton.click()
         await checkoutPage.submitOrderButton.click()
         await orderPage.container.waitFor({ state: "visible" })
       })
     })
-    const cartTotal = (Number(cartSubtotal) + Number(shippingTotal)).toString()
+    const cartGesamt = (Number(cartSubtotal) + Number(shippingGesamt)).toString()
 
     await test.step("Assert the order page shows the total was 0", async () => {
-      expect(await orderPage.cartTotal.getAttribute("data-value")).toBe(
-        cartTotal
+      expect(await orderPage.cartGesamt.getAttribute("data-value")).toBe(
+        cartGesamt
       )
       expect(await orderPage.cartSubtotal.getAttribute("data-value")).toBe(
         cartSubtotal
@@ -312,8 +312,8 @@ test.describe("Gift card tests", async () => {
       await test.step("Add the product to the cart and goto checkout", async () => {
         await productPage.selectOption("M")
         await productPage.clickAddProduct()
-        await productPage.cartDropdown.navCartLink.click()
-        await productPage.cartDropdown.goToCartButton.click()
+        await productPage.cartDropdown.navWarenkorbLink.click()
+        await productPage.cartDropdown.goToWarenkorbButton.click()
         await cartPage.container.waitFor({ state: "visible" })
         await cartPage.cartDropdown.close()
       })
@@ -345,8 +345,8 @@ test.describe("Gift card tests", async () => {
       await test.step("Add the product to the cart and goto checkout", async () => {
         await productPage.selectOption("M")
         await productPage.clickAddProduct()
-        await productPage.cartDropdown.navCartLink.click()
-        await productPage.cartDropdown.goToCartButton.click()
+        await productPage.cartDropdown.navWarenkorbLink.click()
+        await productPage.cartDropdown.goToWarenkorbButton.click()
         await cartPage.container.waitFor({ state: "visible" })
         await cartPage.cartDropdown.close()
         await cartPage.checkoutButton.click()
@@ -379,8 +379,8 @@ test.describe("Gift card tests", async () => {
       await test.step("Add the product to the cart and goto checkout", async () => {
         await productPage.selectOption("M")
         await productPage.clickAddProduct()
-        await productPage.cartDropdown.navCartLink.click()
-        await productPage.cartDropdown.goToCartButton.click()
+        await productPage.cartDropdown.navWarenkorbLink.click()
+        await productPage.cartDropdown.goToWarenkorbButton.click()
         await cartPage.container.waitFor({ state: "visible" })
         await cartPage.cartDropdown.close()
       })
@@ -392,7 +392,7 @@ test.describe("Gift card tests", async () => {
       await cartPage.discountApplyButton.click()
       const paymentGiftcard = await cartPage.getGiftCard(giftcard.code)
       expect(paymentGiftcard.amountValue).toBe(giftcard.amount)
-      expect(await cartPage.cartTotal.getAttribute("data-value")).toBe("0")
+      expect(await cartPage.cartGesamt.getAttribute("data-value")).toBe("0")
     })
 
     await test.step("Navigate away from the cart page and return to it", async () => {
@@ -407,7 +407,7 @@ test.describe("Gift card tests", async () => {
       const paymentGiftcard = await cartPage.getGiftCard(giftcard.code)
       await expect(paymentGiftcard.locator).toBeVisible()
       await expect(paymentGiftcard.code).toContainText(giftcard.code)
-      expect(await cartPage.cartTotal.getAttribute("data-value")).toBe("0")
+      expect(await cartPage.cartGesamt.getAttribute("data-value")).toBe("0")
     })
 
     await test.step("Verify the giftcard is still on the checkout page", async () => {
@@ -416,7 +416,7 @@ test.describe("Gift card tests", async () => {
       const paymentGiftcard = await checkoutPage.getGiftCard(giftcard.code)
       await expect(paymentGiftcard.locator).toBeVisible()
       await expect(paymentGiftcard.code).toContainText(giftcard.code)
-      expect(await checkoutPage.cartTotal.getAttribute("data-value")).toBe("0")
+      expect(await checkoutPage.cartGesamt.getAttribute("data-value")).toBe("0")
       expect(paymentGiftcard.amountValue).toBe(giftcard.amount)
     })
   })
@@ -438,8 +438,8 @@ test.describe("Gift card tests", async () => {
       await test.step("Add the product to the cart and goto checkout", async () => {
         await productPage.selectOption("M")
         await productPage.clickAddProduct()
-        await productPage.cartDropdown.navCartLink.click()
-        await productPage.cartDropdown.goToCartButton.click()
+        await productPage.cartDropdown.navWarenkorbLink.click()
+        await productPage.cartDropdown.goToWarenkorbButton.click()
         await cartPage.container.waitFor({ state: "visible" })
         await cartPage.cartDropdown.close()
       })
@@ -451,7 +451,7 @@ test.describe("Gift card tests", async () => {
       await cartPage.discountApplyButton.click()
       const paymentGiftcard = await cartPage.getGiftCard(giftcard.code)
       expect(paymentGiftcard.amountValue).toBe(giftcard.amount)
-      expect(await cartPage.cartTotal.getAttribute("data-value")).toBe("0")
+      expect(await cartPage.cartGesamt.getAttribute("data-value")).toBe("0")
     })
 
     await test.step("Navigate away from the cart page and return to it", async () => {
@@ -469,7 +469,7 @@ test.describe("Gift card tests", async () => {
       const paymentGiftcard = await cartPage.getGiftCard(giftcard.code)
       await expect(paymentGiftcard.locator).toBeVisible()
       await expect(paymentGiftcard.code).toContainText(giftcard.code)
-      expect(await cartPage.cartTotal.getAttribute("data-value")).toBe("0")
+      expect(await cartPage.cartGesamt.getAttribute("data-value")).toBe("0")
     })
 
     await test.step("Verify the giftcard is still on the checkout page", async () => {
@@ -478,7 +478,7 @@ test.describe("Gift card tests", async () => {
       const paymentGiftcard = await checkoutPage.getGiftCard(giftcard.code)
       await expect(paymentGiftcard.locator).toBeVisible()
       await expect(paymentGiftcard.code).toContainText(giftcard.code)
-      expect(await checkoutPage.cartTotal.getAttribute("data-value")).toBe("0")
+      expect(await checkoutPage.cartGesamt.getAttribute("data-value")).toBe("0")
       expect(paymentGiftcard.amountValue).toBe(giftcard.amount)
     })
   })
@@ -499,8 +499,8 @@ test.describe("Gift card tests", async () => {
       await test.step("Add the product to the cart and goto checkout", async () => {
         await productPage.selectOption("M")
         await productPage.clickAddProduct()
-        await productPage.cartDropdown.navCartLink.click()
-        await productPage.cartDropdown.goToCartButton.click()
+        await productPage.cartDropdown.navWarenkorbLink.click()
+        await productPage.cartDropdown.goToWarenkorbButton.click()
         await cartPage.container.waitFor({ state: "visible" })
         await cartPage.cartDropdown.close()
       })
@@ -512,7 +512,7 @@ test.describe("Gift card tests", async () => {
       await cartPage.discountApplyButton.click()
       const paymentGiftcard = await cartPage.getGiftCard(giftcard.code)
       expect(paymentGiftcard.amountValue).toBe(giftcard.amount)
-      expect(await cartPage.cartTotal.getAttribute("data-value")).toBe("0")
+      expect(await cartPage.cartGesamt.getAttribute("data-value")).toBe("0")
     })
 
     await test.step("Navigate away from the cart page and delete cookies", async () => {
@@ -532,8 +532,8 @@ test.describe("Gift card tests", async () => {
       await test.step("Add the product to the cart and goto checkout", async () => {
         await productPage.selectOption("M")
         await productPage.clickAddProduct()
-        await productPage.cartDropdown.navCartLink.click()
-        await productPage.cartDropdown.goToCartButton.click()
+        await productPage.cartDropdown.navWarenkorbLink.click()
+        await productPage.cartDropdown.goToWarenkorbButton.click()
         await cartPage.container.waitFor({ state: "visible" })
         await cartPage.cartDropdown.close()
       })
@@ -544,7 +544,7 @@ test.describe("Gift card tests", async () => {
       await cartPage.discountApplyButton.click()
       const paymentGiftcard = await cartPage.getGiftCard(giftcard.code)
       expect(paymentGiftcard.amountValue).toBe(giftcard.amount)
-      expect(await cartPage.cartTotal.getAttribute("data-value")).toBe("0")
+      expect(await cartPage.cartGesamt.getAttribute("data-value")).toBe("0")
     })
   })
 
@@ -555,7 +555,7 @@ test.describe("Gift card tests", async () => {
     productPage,
     storePage,
   }) => {
-    let firstTransactionTotal = 0
+    let firstTransactionGesamt = 0
     await test.step("Complete first transaction using the giftcard", async () => {
       let cartSubtotal = ""
       await test.step("Go through purchasing process, upto the cart page", async () => {
@@ -569,12 +569,12 @@ test.describe("Gift card tests", async () => {
         await test.step("Add the product to the cart and goto checkout", async () => {
           await productPage.selectOption("M")
           await productPage.clickAddProduct()
-          await productPage.cartDropdown.navCartLink.click()
-          await productPage.cartDropdown.goToCartButton.click()
+          await productPage.cartDropdown.navWarenkorbLink.click()
+          await productPage.cartDropdown.goToWarenkorbButton.click()
           await cartPage.container.waitFor({ state: "visible" })
           await cartPage.cartDropdown.close()
           cartSubtotal =
-            (await cartPage.cartTotal.getAttribute("data-value")) || ""
+            (await cartPage.cartGesamt.getAttribute("data-value")) || ""
         })
         await test.step("Navigate to the checkout page", async () => {
           await cartPage.checkoutButton.click()
@@ -591,19 +591,19 @@ test.describe("Gift card tests", async () => {
         await expect(paymentGiftcard.locator).toBeVisible()
         await expect(paymentGiftcard.code).toHaveText(giftcard.code)
         expect(paymentGiftcard.amountValue).toBe(giftcard.amount)
-        expect(await checkoutPage.cartTotal.getAttribute("data-value")).toBe(
+        expect(await checkoutPage.cartGesamt.getAttribute("data-value")).toBe(
           "0"
         )
       })
 
-      let shippingTotal = ""
+      let shippingGesamt = ""
       await test.step("Go through checkout process", async () => {
         await test.step("Enter in the first step of the checkout process", async () => {
           await test.step("Enter in the shipping address info", async () => {
             await checkoutPage.shippingFirstNameInput.fill("First")
             await checkoutPage.shippingLastNameInput.fill("Last")
             await checkoutPage.shippingCompanyInput.fill("MyCorp")
-            await checkoutPage.shippingAddressInput.fill("123 Fake street")
+            await checkoutPage.shippingAdresseInput.fill("123 Fake street")
             await checkoutPage.shippingPostalCodeInput.fill("80010")
             await checkoutPage.shippingCityInput.fill("Denver")
             await checkoutPage.shippingProvinceInput.fill("Colorado")
@@ -615,20 +615,20 @@ test.describe("Gift card tests", async () => {
           await test.step("Enter in the contact info and open the billing info form", async () => {
             await checkoutPage.shippingEmailInput.fill("test@example.com")
             await checkoutPage.shippingPhoneInput.fill("3031112222")
-            await checkoutPage.submitAddressButton.click()
+            await checkoutPage.submitAdresseButton.click()
           })
         })
 
         await test.step("Complete the rest of the payment process", async () => {
           await checkoutPage.selectDeliveryOption("FakeEx Standard")
           await checkoutPage.submitDeliveryOptionButton.click()
-          shippingTotal =
-            (await checkoutPage.cartShipping.getAttribute("data-value")) || ""
+          shippingGesamt =
+            (await checkoutPage.cartVersand.getAttribute("data-value")) || ""
           await checkoutPage.submitPaymentButton.click()
         })
 
         await test.step("Make sure the giftcard still has the total as zero after selecting shipping", async () => {
-          expect(await checkoutPage.cartTotal.getAttribute("data-value")).toBe(
+          expect(await checkoutPage.cartGesamt.getAttribute("data-value")).toBe(
             "0"
           )
         })
@@ -638,17 +638,17 @@ test.describe("Gift card tests", async () => {
           await orderPage.container.waitFor({ state: "visible" })
         })
       })
-      const cartTotal = Number(cartSubtotal) + Number(shippingTotal)
-      firstTransactionTotal = cartTotal
+      const cartGesamt = Number(cartSubtotal) + Number(shippingGesamt)
+      firstTransactionGesamt = cartGesamt
 
       await test.step("Assert the order page shows the total was 0", async () => {
-        expect(await orderPage.cartTotal.getAttribute("data-value")).toBe("0")
+        expect(await orderPage.cartGesamt.getAttribute("data-value")).toBe("0")
         expect(await orderPage.cartSubtotal.getAttribute("data-value")).toBe(
           cartSubtotal
         )
         expect(
           await orderPage.cartGiftCardAmount.getAttribute("data-value")
-        ).toBe(cartTotal.toString())
+        ).toBe(cartGesamt.toString())
       })
     })
     await test.step("Setup the second transaction with the same giftcard", async () => {
@@ -664,12 +664,12 @@ test.describe("Gift card tests", async () => {
         await test.step("Add the product to the cart and goto checkout", async () => {
           await productPage.selectOption("M")
           await productPage.clickAddProduct()
-          await productPage.cartDropdown.navCartLink.click()
-          await productPage.cartDropdown.goToCartButton.click()
+          await productPage.cartDropdown.navWarenkorbLink.click()
+          await productPage.cartDropdown.goToWarenkorbButton.click()
           await cartPage.container.waitFor({ state: "visible" })
           await cartPage.cartDropdown.close()
           cartSubtotal =
-            (await cartPage.cartTotal.getAttribute("data-value")) || ""
+            (await cartPage.cartGesamt.getAttribute("data-value")) || ""
         })
         await test.step("Navigate to the checkout page", async () => {
           await cartPage.checkoutButton.click()
@@ -686,21 +686,21 @@ test.describe("Gift card tests", async () => {
         await expect(paymentGiftcard.locator).toBeVisible()
         await expect(paymentGiftcard.code).toHaveText(giftcard.code)
         expect(paymentGiftcard.amountValue).toBe(
-          (giftcard.value - firstTransactionTotal).toString()
+          (giftcard.value - firstTransactionGesamt).toString()
         )
-        expect(await checkoutPage.cartTotal.getAttribute("data-value")).toBe(
+        expect(await checkoutPage.cartGesamt.getAttribute("data-value")).toBe(
           "0"
         )
       })
 
-      let shippingTotal = ""
+      let shippingGesamt = ""
       await test.step("Go through checkout process", async () => {
         await test.step("Enter in the first step of the checkout process", async () => {
           await test.step("Enter in the shipping address info", async () => {
             await checkoutPage.shippingFirstNameInput.fill("First")
             await checkoutPage.shippingLastNameInput.fill("Last")
             await checkoutPage.shippingCompanyInput.fill("MyCorp")
-            await checkoutPage.shippingAddressInput.fill("123 Fake street")
+            await checkoutPage.shippingAdresseInput.fill("123 Fake street")
             await checkoutPage.shippingPostalCodeInput.fill("80010")
             await checkoutPage.shippingCityInput.fill("Denver")
             await checkoutPage.shippingProvinceInput.fill("Colorado")
@@ -712,20 +712,20 @@ test.describe("Gift card tests", async () => {
           await test.step("Enter in the contact info and open the billing info form", async () => {
             await checkoutPage.shippingEmailInput.fill("test@example.com")
             await checkoutPage.shippingPhoneInput.fill("3031112222")
-            await checkoutPage.submitAddressButton.click()
+            await checkoutPage.submitAdresseButton.click()
           })
         })
 
         await test.step("Complete the rest of the payment process", async () => {
           await checkoutPage.selectDeliveryOption("FakeEx Standard")
           await checkoutPage.submitDeliveryOptionButton.click()
-          shippingTotal =
-            (await checkoutPage.cartShipping.getAttribute("data-value")) || ""
+          shippingGesamt =
+            (await checkoutPage.cartVersand.getAttribute("data-value")) || ""
           await checkoutPage.submitPaymentButton.click()
         })
 
         await test.step("Make sure the giftcard still has the total as zero after selecting shipping", async () => {
-          expect(await checkoutPage.cartTotal.getAttribute("data-value")).toBe(
+          expect(await checkoutPage.cartGesamt.getAttribute("data-value")).toBe(
             "0"
           )
         })
@@ -735,18 +735,18 @@ test.describe("Gift card tests", async () => {
           await orderPage.container.waitFor({ state: "visible" })
         })
       })
-      const cartTotal = (
-        Number(cartSubtotal) + Number(shippingTotal)
+      const cartGesamt = (
+        Number(cartSubtotal) + Number(shippingGesamt)
       ).toString()
 
       await test.step("Assert the order page shows the total was 0", async () => {
-        expect(await orderPage.cartTotal.getAttribute("data-value")).toBe("0")
+        expect(await orderPage.cartGesamt.getAttribute("data-value")).toBe("0")
         expect(await orderPage.cartSubtotal.getAttribute("data-value")).toBe(
           cartSubtotal
         )
         expect(
           await orderPage.cartGiftCardAmount.getAttribute("data-value")
-        ).toBe(cartTotal)
+        ).toBe(cartGesamt)
       })
     })
   })

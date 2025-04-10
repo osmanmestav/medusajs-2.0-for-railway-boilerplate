@@ -4,18 +4,18 @@ import { BasePage } from "./base/base-page"
 export class OrderPage extends BasePage {
   container: Locator
   cartSubtotal: Locator
-  cartDiscount: Locator
+  cartRabatt: Locator
   cartGiftCardAmount: Locator
-  cartShipping: Locator
+  cartVersand: Locator
   cartTaxes: Locator
-  cartTotal: Locator
+  cartGesamt: Locator
   orderEmail: Locator
   orderDate: Locator
   orderId: Locator
   orderStatus: Locator
   orderPaymentStatus: Locator
-  shippingAddressSummary: Locator
-  shippingContactSummary: Locator
+  shippingAdresseSummary: Locator
+  shippingKontaktSummary: Locator
   shippingMethodSummary: Locator
   paymentMethod: Locator
   paymentAmount: Locator
@@ -37,18 +37,18 @@ export class OrderPage extends BasePage {
     this.orderId = this.container.getByTestId("order-id")
     this.orderStatus = this.container.getByTestId("order-status")
     this.cartSubtotal = this.container.getByTestId("cart-subtotal")
-    this.cartDiscount = this.container.getByTestId("cart-discount")
+    this.cartRabatt = this.container.getByTestId("cart-discount")
     this.cartGiftCardAmount = this.container.getByTestId(
       "cart-gift-card-amount"
     )
-    this.cartShipping = this.container.getByTestId("cart-shipping")
+    this.cartVersand = this.container.getByTestId("cart-shipping")
     this.cartTaxes = this.container.getByTestId("cart-taxes")
-    this.cartTotal = this.container.getByTestId("cart-total")
+    this.cartGesamt = this.container.getByTestId("cart-total")
     this.orderPaymentStatus = this.container.getByTestId("order-payment-status")
-    this.shippingAddressSummary = this.container.getByTestId(
+    this.shippingAdresseSummary = this.container.getByTestId(
       "shipping-address-summary"
     )
-    this.shippingContactSummary = this.container.getByTestId(
+    this.shippingKontaktSummary = this.container.getByTestId(
       "shipping-contact-summary"
     )
     this.shippingMethodSummary = this.container.getByTestId(
