@@ -113,7 +113,7 @@ const ProfileBillingAddress: React.FC<MyInformationProps> = ({
             data-testid="billing-company-input"
           />
           <Input
-            label="Address"
+            label="Adresse"
             name="billing_address.address_1"
             defaultValue={billingAddress?.address_1 || undefined}
             required
@@ -134,7 +134,7 @@ const ProfileBillingAddress: React.FC<MyInformationProps> = ({
               data-testid="billing-postcal-code-input"
             />
             <Input
-              label="City"
+              label="Stadt"
               name="billing_address.city"
               defaultValue={billingAddress?.city || undefined}
               required

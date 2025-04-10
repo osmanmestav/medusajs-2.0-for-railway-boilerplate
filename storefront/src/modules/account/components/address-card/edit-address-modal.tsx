@@ -155,7 +155,7 @@ const EditAddress: React.FC<EditAddressProps> = ({
                 data-testid="company-input"
               />
               <Input
-                label="Address"
+                label="Adresse"
                 name="address_1"
                 required
                 autoComplete="address-line1"
@@ -179,7 +179,7 @@ const EditAddress: React.FC<EditAddressProps> = ({
                   data-testid="postal-code-input"
                 />
                 <Input
-                  label="City"
+                  label="Stadt"
                   name="city"
                   required
                   autoComplete="locality"
@@ -203,7 +203,7 @@ const EditAddress: React.FC<EditAddressProps> = ({
                 data-testid="country-select"
               />
               <Input
-                label="Phone"
+                label="Telefon"
                 name="phone"
                 autoComplete="phone"
                 defaultValue={address.phone || undefined}

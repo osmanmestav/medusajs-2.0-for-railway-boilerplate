@@ -53,7 +53,7 @@ const BillingAddress = ({ cart }: { cart: HttpTypes.StoreCart | null }) => {
           data-testid="billing-last-name-input"
         />
         <Input
-          label="Address"
+          label="Adresse"
           name="billing_address.address_1"
           autoComplete="address-line1"
           value={formData["billing_address.address_1"]}
@@ -79,7 +79,7 @@ const BillingAddress = ({ cart }: { cart: HttpTypes.StoreCart | null }) => {
           data-testid="billing-postal-input"
         />
         <Input
-          label="City"
+          label="Stadt"
           name="billing_address.city"
           autoComplete="address-level2"
           value={formData["billing_address.city"]}
@@ -106,7 +106,7 @@ const BillingAddress = ({ cart }: { cart: HttpTypes.StoreCart | null }) => {
           data-testid="billing-province-input"
         />
         <Input
-          label="Phone"
+          label="Telefon"
           name="billing_address.phone"
           autoComplete="tel"
           value={formData["billing_address.phone"]}

@@ -53,7 +53,7 @@ const Register = ({ setCurrentView }: Props) => {
             data-testid="email-input"
           />
           <Input
-            label="Phone"
+            label="Telefon"
             name="phone"
             type="tel"
             autoComplete="tel"

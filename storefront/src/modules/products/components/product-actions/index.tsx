@@ -146,7 +146,7 @@ export default function ProductActions({
           {!selectedVariant
             ? "Select variant"
             : !inStock
-            ? "Out of stock"
+            ? "Nicht vorrätig"
             : "In den Warenkorb"}
         </Button>
         <MobileActions

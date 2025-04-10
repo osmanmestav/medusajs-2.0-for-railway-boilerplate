@@ -81,7 +81,7 @@ const AddAddress = ({ region }: { region: HttpTypes.StoreRegion }) => {
                 data-testid="company-input"
               />
               <Input
-                label="Address"
+                label="Adresse"
                 name="address_1"
                 required
                 autoComplete="address-line1"
@@ -102,7 +102,7 @@ const AddAddress = ({ region }: { region: HttpTypes.StoreRegion }) => {
                   data-testid="postal-code-input"
                 />
                 <Input
-                  label="City"
+                  label="Stadt"
                   name="city"
                   required
                   autoComplete="locality"
@@ -123,7 +123,7 @@ const AddAddress = ({ region }: { region: HttpTypes.StoreRegion }) => {
                 data-testid="country-select"
               />
               <Input
-                label="Phone"
+                label="Telefon"
                 name="phone"
                 autoComplete="phone"
                 data-testid="phone-input"
