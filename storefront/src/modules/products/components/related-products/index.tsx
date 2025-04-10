@@ -23,10 +23,10 @@ export default async function RelatedProducts({
   const region = await getRegion(countryCode)
 
   if (!region) {
-  const queryParams: StoreProductParamsWithTags = {}
+    const queryParams: StoreProductParamsWithTags = {}
   }
 
-  // edit this function to define your related products logic
+  // Bearbeite diese Funktion, um deine Logik für verwandte Produkte zu definieren
   const queryParams: StoreProductParamsWithTags = {}
   if (region?.id) {
     queryParams.region_id = region.id
@@ -59,10 +59,10 @@ export default async function RelatedProducts({
     <div className="product-page-constraint">
       <div className="flex flex-col items-center text-center mb-16">
         <span className="text-base-regular text-gray-600 mb-6">
-          Related products
+          Verwandte Produkte
         </span>
         <p className="text-2xl-regular text-ui-fg-base max-w-lg">
-          You might also want to check out these products.
+          Vielleicht interessieren Sie sich auch für diese Produkte.
         </p>
       </div>
 

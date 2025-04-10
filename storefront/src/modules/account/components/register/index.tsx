@@ -22,23 +22,23 @@ const Register = ({ setCurrentView }: Props) => {
       data-testid="register-page"
     >
       <h1 className="text-large-semi uppercase mb-6">
-        Become a HypeMarkt Member
+        HypeMarkt Mitglied werden
       </h1>
       <p className="text-center text-base-regular text-ui-fg-base mb-4">
-        Create your HypeMarkt Member profile, and get access to an enhanced
-        shopping experience.
+        Erstellen Sie Ihr HypeMarkt-Mitgliedsprofil und genießen Sie ein
+        verbessertes Einkaufserlebnis.
       </p>
       <form className="w-full flex flex-col" action={formAction}>
         <div className="flex flex-col w-full gap-y-2">
           <Input
-            label="First name"
+            label="Vorname"
             name="first_name"
             required
             autoComplete="given-name"
             data-testid="first-name-input"
           />
           <Input
-            label="Last name"
+            label="Nachname"
             name="last_name"
             required
             autoComplete="family-name"
@@ -70,33 +70,33 @@ const Register = ({ setCurrentView }: Props) => {
         </div>
         <ErrorMessage error={message} data-testid="register-error" />
         <span className="text-center text-ui-fg-base text-small-regular mt-6">
-          By creating an account, you agree to HypeMarkt&apos;s{" "}
+          Durch die Erstellung eines Kontos stimmen Sie den{" "}
           <LocalizedClientLink
             href="/content/privacy-policy"
             className="underline"
           >
-            Privacy Policy
+            Datenschutzbestimmungen
           </LocalizedClientLink>{" "}
-          and{" "}
+          und den{" "}
           <LocalizedClientLink
             href="/content/terms-of-use"
             className="underline"
           >
-            Terms of Use
-          </LocalizedClientLink>
-          .
+            Nutzungsbedingungen
+          </LocalizedClientLink>{" "}
+          von HypeMarkt zu.
         </span>
         <SubmitButton className="w-full mt-6" data-testid="register-button">
-          Join
+          Jetzt beitreten
         </SubmitButton>
       </form>
       <span className="text-center text-ui-fg-base text-small-regular mt-6">
-        Already a member?{" "}
+        Bereits Mitglied?{" "}
         <button
           onClick={() => setCurrentView(LOGIN_VIEW.SIGN_IN)}
           className="underline"
         >
-          Sign in
+          Anmelden
         </button>
         .
       </span>
