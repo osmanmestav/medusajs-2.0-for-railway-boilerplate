@@ -1,12 +1,8 @@
-import React from "react"
-
-export default function Hakkimizda() {
+export default function AboutPage() {
   return (
-    <main className="p-10 max-w-3xl mx-auto">
-      <h1 className="text-4xl font-bold mb-4">Hakkımızda</h1>
-      <p className="text-lg text-gray-700">
-        Biz, Medusa altyapısı kullanan modern bir e-ticaret sitesiyiz. Amacımız müşterilerimize en iyi alışveriş deneyimini sunmak.
-      </p>
+    <main className="p-8">
+      <h1 className="text-3xl font-bold mb-4">Über uns</h1>
+      <p>Willkommen auf unserer Über uns Seite. Hier erfahren Sie mehr über unser Unternehmen und unsere Werte.</p>
     </main>
-  )
+  );
 }
