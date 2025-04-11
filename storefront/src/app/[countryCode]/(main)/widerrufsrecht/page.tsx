@@ -25,7 +25,7 @@ export default function AboutPage() {
         die letzte Ware in Besitz genommen haben bzw. hat.
       </p>
       <p className="p4">
-        Um Ihr Widerrufsrecht auszu&uuml;ben, m&uuml;ssen Sie uns (DRUNKY,
+        Um Ihr Widerrufsrecht auszu&uuml;ben, m&uuml;ssen Sie uns (BozZY Consulting,
         Freiligrathring 15, 40878 Ratingen, Deutschland, E-Mail:
         info@hypemarkt.de) mittels einer eindeutigen Erkl&auml;rung (z. B. ein
         mit der Post versandter Brief oder E-Mail) &uuml;ber Ihren Entschluss,
@@ -69,7 +69,7 @@ export default function AboutPage() {
         R&uuml;cksendungen/R&uuml;ckgaben k&ouml;nnen ausschlie&szlig;lich an
         die folgende Adresse gerichtet werden:
         <br />
-        DRUNKY, Freiligrathring 15, 40878 Ratingen, Deutschland.
+        BozZY Consulting, Freiligrathring 15, 40878 Ratingen, Deutschland.
       </p>
       <p className="p4">
         Die Frist ist gewahrt, wenn Sie die Waren vor Ablauf der Frist von
@@ -110,7 +110,7 @@ export default function AboutPage() {
         dieses Formular aus und senden es zur&uuml;ck.
       </p>
       <p className="p4">An:</p>
-      <p className="p4">DRUNKY, Freiligrathring 15, 40878 Ratingen, Deutschland</p>
+      <p className="p4">BozZY Consulting, Freiligrathring 15, 40878 Ratingen, Deutschland</p>
       <p className="p4">E-Mail: info@hypemarkt.de</p>
       <p className="p4">
         Hiermit widerrufe(n) ich/wir (*) den von mir/uns (*) abgeschlossenen

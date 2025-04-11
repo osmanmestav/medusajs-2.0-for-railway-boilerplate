@@ -5,7 +5,7 @@ export default function AboutPage() {
       <p className="p2">
         <strong>Verantwortlicher f&uuml;r die Datenverarbeitung ist:</strong>
       </p>
-      <p className="p2">DRUNKY, Freiligrathring 15, 40878 Ratingen, Deutschland</p>
+      <p className="p2">BozZY Consulting, Freiligrathring 15, 40878 Ratingen, Deutschland</p>
       <p className="p3">
         <span className="s1">Mail: </span>info@hypemarkt.de
       </p>
