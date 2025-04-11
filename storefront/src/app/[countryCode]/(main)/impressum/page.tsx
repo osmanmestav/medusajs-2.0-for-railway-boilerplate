@@ -2,10 +2,8 @@ export default function ImpressumPage() {
   return (
     <main className="p-8 max-w-5xl mx-auto">
       <h1 className="text-3xl font-bold mb-4">Impressum</h1>
-      <p className="p2">DRUNKY</p>
+      <p className="p2">BozZY Consulting</p>
       <p className="p2">
-        Inh.: L. Bozdag
-        <br />
         Freiligrathring 15&nbsp;
         <br />
         40878 Ratingen

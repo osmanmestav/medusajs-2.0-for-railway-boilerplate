@@ -336,7 +336,7 @@ export default function AboutPage() {
           wenden.
         </li>
       </ul>
-      <table className="t1" cellspacing="0" cellpadding="0">
+      <table className="t1" >
         <tbody>
           <tr>
             <td className="td1" valign="middle">

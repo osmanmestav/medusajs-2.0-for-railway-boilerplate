@@ -96,14 +96,43 @@ export default async function Footer() {
                     Impressum
                   </LocalizedClientLink>
                 </li>
+
                 <li>
                   <LocalizedClientLink
-                    href="/contact"
+                    href="/agb"
                     className="hover:text-ui-fg-base"
                   >
-                    Kontakt
+                    AGB
                   </LocalizedClientLink>
                 </li>
+
+                <li>
+                  <LocalizedClientLink
+                    href="/datenschutz"
+                    className="hover:text-ui-fg-base"
+                  >
+                    Datenschutz
+                  </LocalizedClientLink>
+                </li>
+
+                <li>
+                  <LocalizedClientLink
+                    href="/versandbedingungen"
+                    className="hover:text-ui-fg-base"
+                  >
+                    Versandbedingungen
+                  </LocalizedClientLink>
+                </li>
+
+                <li>
+                  <LocalizedClientLink
+                    href="/widerrufsrecht"
+                    className="hover:text-ui-fg-base"
+                  >
+                    Widerrufsrecht
+                  </LocalizedClientLink>
+                </li>
+
               </ul>
             </div>
           </div>
