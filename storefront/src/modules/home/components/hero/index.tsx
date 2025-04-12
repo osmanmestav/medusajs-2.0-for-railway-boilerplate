@@ -7,7 +7,7 @@ const Hero = () => {
       <div
         className="absolute inset-0 z-10 flex flex-col justify-center items-center text-center small:p-32 gap-6"
         style={{
-          background: "url('banner.png')",
+          background: "url('banner-min.png')",
           backgroundSize: "cover",
           backgroundPosition: "center",
         }}
